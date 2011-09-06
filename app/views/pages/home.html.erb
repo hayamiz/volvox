@@ -1,3 +1,6 @@
+<% if signed_in? %>
+<h1>This is your page</h1>
+<% else %>
 <h1>Welcome to Volvox</h1>
 
 <p>
@@ -5,3 +8,4 @@
 </p>
 
 <%= link_to "Sign up", signup_path, :class => "signup_button round" %>
+<% end %>
