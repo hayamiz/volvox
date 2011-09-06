@@ -7,6 +7,7 @@ gem 'rails', '3.1.0'
 
 gem 'sqlite3', '1.3.4'
 gem 'will_paginate'
+gem 'gravatar_image_tag', '1.0.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -48,3 +49,6 @@ group :test do
   gem 'rb-fsevent', '0.4.3.1'
   gem 'libnotify', '0.5.7'
 end
+
+gem 'wirble'
+
