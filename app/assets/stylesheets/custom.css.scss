@@ -1,0 +1,59 @@
+
+/* 
+ * using color scheme: http://colorschemedesigner.com/#0n41Tuullw0w0
+ */
+
+body {
+  background: #6F2C03;
+}
+
+div.container {
+  width: 710px;
+}
+
+header {
+  margin-bottom: 10px;
+  text-align: center;
+
+  nav {
+    ul {
+      margin: 0;
+      padding: 0;
+
+      li {
+	list-style-type: none;
+	display: inline-block;
+	padding: 0.2em 0;
+
+	a {
+	  color: #D4AB65;
+	  padding: 0 5px;
+	  font-weight: bold;
+	}
+
+	a:visited {
+	  color: #D49C3D;
+	}
+      }
+    }
+  }
+}
+
+.main {
+  background: #FFF8DC;
+  padding: 20px;
+}
+
+.round {
+  -moz-border-radius:    10px;
+  -webkit-border-radius: 10px;
+  border-radius:         10px;
+}
+
+section.console {
+  font-family: monospace;
+  background: white;
+  border: solid 2px steelblue;
+  padding: 5px;
+  margin-top: 10px;
+}

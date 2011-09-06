@@ -7,6 +7,30 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-<%= yield %>
+    <div class="container">
+      <header>
+        <%= link_to(image_tag("volvox-logo.png"), root_path) %>
+        <nav>
+          <ul>
+            <li><%= link_to "Home", root_path %></li>
+            <li><%= link_to "Setting", "#" %></li>
+            <li><%= link_to "Help", "#" %></li>
+            <li><%= link_to "Sign in", "#" %></li>
+          </ul>
+        </nav>
+      </header>
+
+      <section class="main round">
+        <% flash.each do |key, value| %>
+	  <%= content_tag(:div, value, :class => "flash #{key}") %>
+        <% end %>
+        <%= yield %>
+      </section>
+
+      <section class="console">
+        <%= debug(params) if Rails.env.development? %>
+        <%= debug(session) if Rails.env.development? %>
+      </section>
+    </div>
   </body>
 </html>
