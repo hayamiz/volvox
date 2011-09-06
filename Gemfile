@@ -16,9 +16,9 @@ group :assets do
   gem 'uglifier'
 end
 
-gem 'jquery-rails'
-gem 'execjs'
-gem 'therubyracer'
+gem 'jquery-rails', '1.0.13'
+gem 'execjs', '1.2.4'
+gem 'therubyracer', '0.9.4'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -31,6 +31,7 @@ gem 'therubyracer'
 
 group :development do
   gem 'rspec-rails', '2.6.1'
+  gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
 end
 
 group :test do
@@ -38,4 +39,12 @@ group :test do
   gem 'turn', :require => false
   gem 'rspec-rails', '2.6.1'
   gem 'webrat', '0.7.3'
+  gem 'factory_girl_rails', '1.2.0'
+  gem 'spork', '0.8.5'
+  gem 'guard', '0.6.3'
+  gem 'guard-spork', '0.2.1'
+  gem 'guard-rspec', '0.4.4'
+  gem 'rb-inotify', '0.8.6'
+  gem 'rb-fsevent', '0.4.3.1'
+  gem 'libnotify', '0.5.7'
 end
