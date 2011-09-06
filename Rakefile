@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-PetDiary::Application.load_tasks
+Volvox::Application.load_tasks

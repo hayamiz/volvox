@@ -2,6 +2,6 @@
 require File.expand_path('../application', __FILE__)
 
 # Initialize the rails application
-PetDiary::Application.initialize!
+Volvox::Application.initialize!
 
 require 'will_paginate'
