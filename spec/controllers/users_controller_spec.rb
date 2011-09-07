@@ -82,4 +82,74 @@ describe UsersController do
       end
     end
   end
+
+  describe "GET 'edit'" do
+    before(:each) do
+      @user = test_sign_in(Factory(:user))
+    end
+
+    describe "for non authorized users" do
+      it "should deny access by others" do
+        wrong_user = test_sign_in(Factory(:user, :email => "mallory@example.com"))
+        get :edit, :id => @user
+        response.should redirect_to(root_path)
+      end
+    end
+
+    describe "for authorized users" do
+      it "should have the right title" do
+        get :edit, :id => @user
+        response.should have_selector("title", :content => "Setting")
+      end
+
+      it "should have required fields" do
+        get :edit, :id => @user
+        response.should have_selector("input[name='user[name]'][type='text']",
+                                      :value => @user.name)
+        response.should have_selector("input[name='user[email]'][type='text']",
+                                      :value => @user.email)
+        response.should have_selector("input[name='user[password]'][type='password']")
+        response.should have_selector("input[name='user[password_confirmation]'][type='password']")
+      end
+    end
+  end
+
+  describe "PUT 'update'" do
+    before(:each) do
+      @user = test_sign_in(Factory(:user))
+      @other = Factory(:user, :email => "other@example.com")
+      @attr = {
+        :name => "New Name",
+        :email => "new" + @user.email,
+        :password => @user.password,
+        :password_confirmation => @user.password
+      }
+    end
+
+    it "should not update an instance with taken email" do
+      attr = @attr.merge(:email => @other.email)
+      put :update, :id => @user, :user => attr
+      response.should render_template("users/edit")
+      @user.reload
+      @user.name.should_not == attr[:name]
+      @user.email.should_not == attr[:email]
+    end
+
+    it "should update an instance without password change" do
+      attr = @attr.merge(:password => "", :password_confirmation => "")
+      put :update, :id => @user, :user => attr
+      response.should redirect_to(@user)
+      @user.reload
+      @user.name.should == @attr[:name]
+      @user.email.should == @attr[:email]
+    end
+
+    it "should update an instance" do
+      put :update, :id => @user, :user => @attr
+      response.should redirect_to(@user)
+      @user.reload
+      @user.name.should == @attr[:name]
+      @user.email.should == @attr[:email]
+    end
+  end
 end
