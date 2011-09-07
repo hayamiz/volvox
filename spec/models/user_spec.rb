@@ -85,4 +85,77 @@ describe User do
       end
     end
   end
+
+  describe "association with Authorship" do
+    before(:each) do
+      @user = Factory(:user)
+    end
+
+    it "should respond to authorships method" do
+      @user.should respond_to(:authorships)
+    end
+
+    it "should respond to diaries method" do
+      @user.should respond_to(:diaries)
+    end
+
+    it "should have no diaries at first" do
+      @user.diaries.should be_empty
+    end
+
+    it "should have a diary" do
+      diary = Factory(:diary)
+      @user.authorships.create!(:diary_id => diary)
+      @user.diaries.should == [diary]
+    end
+
+    describe "author? method" do
+      before(:each) do
+        @other = Factory(:user, :email => Factory.next(:email))
+        @diary = Factory(:diary)
+        @user.authorships.create!(:diary_id => @diary)
+      end
+
+      it "should respond_to author? method" do
+        @user.should respond_to(:author?)
+      end
+
+      it "should be author if the user is author" do
+        @user.should be_author(@diary)
+      end
+
+      it "should not be author if the user is not author" do
+        @other.should_not be_author(@diary)
+      end
+    end
+
+    describe "participate method" do
+      before(:each) do
+        @other = Factory(:user, :email => Factory.next(:email))
+        @diary = Factory(:diary)
+        @user.authorships.create!(:diary_id => @diary)
+      end
+
+      it "should have only one author at first" do
+        @diary.authors.should == [@user]
+      end
+
+      it "should respond_to participate" do
+        @user.should respond_to(:participate)
+        @other.should respond_to(:participate)
+      end
+
+      it "should be added to authors of the diary" do
+        @diary.authors.should == [@user]
+        @other.participate(@diary)
+        @diary.reload.authors.should == [@user, @other]
+      end
+
+      it "should not be added to authors if the user is already one of authors" do
+        lambda do
+          @user.participate(@diary)
+        end.should_not change(@diary, :authors)
+      end
+    end
+  end
 end

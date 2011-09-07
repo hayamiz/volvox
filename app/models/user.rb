@@ -15,17 +15,21 @@ class User < ActiveRecord::Base
   attr_accessor :password
   attr_accessible :name, :email, :password, :password_confirmation, :salt
 
-  email_regex = %r{
-    ^ # Start of string
-    [0-9a-z] # First character
-    [0-9a-z.+]+ # Middle characters
-    [0-9a-z] # Last character
-    @ # Separating @ character
-    [0-9a-z] # Domain name begin
-    [0-9a-z.-]+ # Domain name middle
-    [0-9a-z] # Domain name end
-    $ # End of string
-  }xi # Case insensitive
+  has_many :authorships, :foreign_key => "user_id", :dependent => :destroy
+  has_many :diaries, :through => :authorships
+
+  email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  # %r{
+  #   ^ # Start of string
+  #   [0-9a-z] # First character
+  #   [0-9a-z.+]+ # Middle characters
+  #   [0-9a-z] # Last character
+  #   @ # Separating @ character
+  #   [0-9a-z] # Domain name begin
+  #   [0-9a-z.-]+ # Domain name middle
+  #   [0-9a-z] # Domain name end
+  #   $ # End of string
+  # }xi # Case insensitive
 
   validates(:name,
             :presence => true,
@@ -55,6 +59,14 @@ class User < ActiveRecord::Base
 
   def has_password?(submitted_password)
     self.encrypted_password == encrypt(submitted_password)
+  end
+
+  def author?(diary)
+    ! self.authorships.find_by_diary_id(diary.id).nil?
+  end
+
+  def participate(diary)
+    self.authorships.create!(:diary_id => diary.id) unless self.author?(diary)
   end
 
   private

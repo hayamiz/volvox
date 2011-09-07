@@ -26,7 +26,27 @@ describe Diary do
     end
   end
 
-  describe "associations" do
+  describe "association with Authorship" do
+    before(:each) do
+      @user = Factory(:user)
+      @diary = Factory(:diary)
+      @authorship = @user.authorships.create(:diary_id => @diary)
+    end
+
+    it "should respond to reverse_authorships method" do
+      @diary.should respond_to(:reverse_authorships)
+    end
+
+    it "should respond to authors method" do
+      @diary.should respond_to(:authors)
+    end
+
+    it "should have an author" do
+      @diary.authors.should == [@user]
+    end
+  end
+
+  describe "association with Entry" do
     before(:each) do
       @diary = Factory(:diary)
     end
