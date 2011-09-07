@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110907201825) do
+ActiveRecord::Schema.define(:version => 20110907204549) do
+
+  create_table "authorships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "diary_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "authorships", ["diary_id"], :name => "index_authorships_on_diary_id"
+  add_index "authorships", ["user_id", "diary_id"], :name => "index_authorships_on_user_id_and_diary_id", :unique => true
+  add_index "authorships", ["user_id"], :name => "index_authorships_on_user_id"
 
   create_table "diaries", :force => true do |t|
     t.string   "title"
