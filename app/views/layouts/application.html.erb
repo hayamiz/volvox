@@ -19,6 +19,7 @@
             <% else %>
             <li><%= link_to "Sign in", signin_path %></li>
             <% end %>
+            <%= "signed in as #{current_user.name}" if signed_in? %>
           </ul>
         </nav>
       </header>
@@ -30,10 +31,12 @@
         <%= yield %>
       </section>
 
+      <% if Rails.env.development? %>
       <section class="console">
-        <%= debug(params) if Rails.env.development? %>
-        <%= debug(session) if Rails.env.development? %>
+        <%= debug(params) %>
+        <%= debug(session) %>
       </section>
+      <% end %>
     </div>
   </body>
 </html>
