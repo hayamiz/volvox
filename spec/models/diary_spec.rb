@@ -25,5 +25,30 @@ describe Diary do
       Diary.new(@attr.merge(:desc => "")).should be_valid
     end
   end
+
+  describe "associations" do
+    before(:each) do
+      @diary = Factory(:diary)
+    end
+
+    it "should respond to entries" do
+      @diary.should respond_to(:entries)
+    end
+
+    it "should have no entires at first" do
+      @diary.entries.should be_empty
+    end
+
+    it "should have a entry" do
+      entry1 = Factory(:entry, :diary => @diary)
+      @diary.entries.should == [entry1]
+    end
+
+    it "should have entiries sorted" do
+      entry1 = Factory(:entry, :diary => @diary, :created_at => 1.day.ago)
+      entry2 = Factory(:entry, :diary => @diary, :created_at => Time.now)
+      @diary.entries.should == [entry2, entry1]
+    end
+  end
 end
 
