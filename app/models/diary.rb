@@ -11,3 +11,14 @@ class Diary < ActiveRecord::Base
             :presence => true,
             :length => { :maximum => 255 })
 end
+# == Schema Information
+#
+# Table name: diaries
+#
+#  id         :integer         not null, primary key
+#  title      :string(255)
+#  desc       :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+

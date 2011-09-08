@@ -72,3 +72,14 @@ describe Diary do
   end
 end
 
+# == Schema Information
+#
+# Table name: diaries
+#
+#  id         :integer         not null, primary key
+#  title      :string(255)
+#  desc       :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+

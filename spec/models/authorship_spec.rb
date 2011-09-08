@@ -30,3 +30,14 @@ describe Authorship do
     end
   end
 end
+# == Schema Information
+#
+# Table name: authorships
+#
+#  id         :integer         not null, primary key
+#  user_id    :integer
+#  diary_id   :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
