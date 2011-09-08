@@ -1,0 +1,7 @@
+
+<h1><%= @diary.title %></h1>
+<h2><%= @diary.desc %></h2>
+
+<% if signed_in? %>
+<%= link_to "Edit", edit_diary_path(@diary) %>
+<% end  %>

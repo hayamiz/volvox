@@ -1,7 +1,9 @@
 
 class DiariesController < ApplicationController
-  before_filter :authenticate
-  before_filter :author, :only => [:edit, :update]
+  before_filter(:authenticate,
+                :only => [:new, :create, :edit, :update])
+  before_filter(:author,
+                :only => [:edit, :update])
 
   def new
     @title = "Create a new diary"
@@ -15,6 +17,7 @@ class DiariesController < ApplicationController
         @diary.save!
         current_user.participate(@diary)
       end
+      flash[:success] = "The diary '#{@diary.title}' created successfully!"
       redirect_to root_path
     else
       render "diaries/new"
@@ -27,10 +30,19 @@ class DiariesController < ApplicationController
 
   def update
     if @diary.update_attributes(params[:diary])
-      flash[:notice] = "Updated the diary settings."
-      redirect_to diaries_path(@diary)
+      flash[:success] = "Updated the diary settings successfully"
+      redirect_to @diary
     else
       render "diaries/edit"
+    end
+  end
+
+  def show
+    @diary = Diary.find_by_id(params[:id])
+    if @diary
+      @title = @diary.title
+    else
+      not_found
     end
   end
 

@@ -68,6 +68,7 @@ describe DiariesController do
         it "should redirect to the root page" do
           post :create, :diary => @attr
           response.should redirect_to(root_path)
+          flash[:success].should =~ /created/
         end
 
         it "should also create an Authorship instance with valid inputs" do
@@ -190,9 +191,54 @@ describe DiariesController do
 
         it "should redirect to the diary with flash message" do
           put :update, :id => @diary, :diary => @attr
-          response.should redirect_to(diaries_path(@diary))
-          flash[:notice].should =~ /updated/i
+          response.should redirect_to(@diary)
+          flash[:success].should =~ /updated/i
         end
+      end
+    end
+  end
+
+  describe "GET 'show'" do
+    before(:each) do
+      @diary = Factory(:diary)
+    end
+
+    it "should have the right title" do
+      get :show, :id => @diary
+      response.should have_selector("title", :content => @diary.title)
+    end
+
+    it "should have the title and the description" do
+      get :show, :id => @diary
+      response.should have_selector("h1", :content => @diary.title)
+      response.should have_selector("h2", :content => @diary.desc)
+    end
+
+    it "should not have the link to the edit page" do
+      get :show, :id => @diary
+      response.should_not have_selector("a",
+                                        :href => edit_diary_path(@diary),
+                                        :content => "Edit")
+    end
+
+    describe "for authors" do
+      before(:each) do
+        @user = test_sign_in(Factory(:user))
+        @user.participate(@diary)
+      end
+
+      it "should have the link to the edit page" do
+        get :show, :id => @diary
+        response.should have_selector("a",
+                                      :href => edit_diary_path(@diary),
+                                      :content => "Edit")
+      end
+    end
+
+    describe "for non-existing diaries" do
+      it "should return 404 code" do
+        get :show, :id => @diary.id + 1
+        response.response_code.should == 404
       end
     end
   end
