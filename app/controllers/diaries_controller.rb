@@ -1,6 +1,7 @@
 
 class DiariesController < ApplicationController
   before_filter :authenticate
+  before_filter :author, :only => [:edit]
 
   def new
     @title = "Create a new diary"
@@ -18,5 +19,15 @@ class DiariesController < ApplicationController
     else
       render "diaries/new"
     end
+  end
+
+  def edit
+    @title = "Edit the diary"
+  end
+
+private
+  def author
+    @diary = Diary.find_by_id(params[:id])
+    redirect_back_or signin_path unless current_user.author?(@diary)
   end
 end

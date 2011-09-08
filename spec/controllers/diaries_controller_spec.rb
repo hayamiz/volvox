@@ -84,4 +84,48 @@ describe DiariesController do
       end
     end
   end
+
+  describe "GET 'edit'" do
+    before(:each) do
+      @diary = Factory(:diary)
+    end
+
+    describe "for non-signed-in users" do
+      it "should redirect to sign in form" do
+        get :edit, :id => @diary
+        response.should redirect_to(signin_path)
+      end
+    end
+
+    describe "for signed-in non-authors" do
+      before(:each) do
+        @user = test_sign_in(Factory(:user))
+        @author = Factory(:user, :email => Factory.next(:email))
+        @author.participate(@diary)
+      end
+
+      it "should redirect to sign in form" do
+        get :edit, :id => @diary
+        response.should redirect_to(signin_path)
+      end
+    end
+
+    describe "for signed-in authors" do
+      before(:each) do
+        @user = test_sign_in(Factory(:user))
+        @user.participate(@diary)
+      end
+
+      it "should have the right title" do
+        get :edit, :id => @diary
+        response.should have_selector("title", :content => "Edit the diary")
+      end
+
+      it "should have form fields" do
+        get :edit, :id => @diary
+        response.should have_selector("input[type='text'][name='diary[title]']")
+        response.should have_selector("input[type='text'][name='diary[desc]']")
+      end
+    end
+  end
 end
