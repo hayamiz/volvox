@@ -7,5 +7,8 @@ namespace :db do
                         :email			=> "info@hayamin.com",
                         :password		=> "hogehoge",
                         :password_confirmation	=> "hogehoge")
+    diary = Diary.create!(:title => "Volvox diary",
+                          :desc => "This is a sample diary")
+    user.participate(diary)
   end
 end
