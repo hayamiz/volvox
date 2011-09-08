@@ -136,6 +136,7 @@ describe UsersController do
     end
 
     it "should update an instance without password change" do
+      pending "considering about changing the way of auth."
       attr = @attr.merge(:password => "", :password_confirmation => "")
       put :update, :id => @user, :user => attr
       response.should redirect_to(@user)
