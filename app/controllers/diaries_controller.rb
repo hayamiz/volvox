@@ -1,7 +1,7 @@
 
 class DiariesController < ApplicationController
   before_filter :authenticate
-  before_filter :author, :only => [:edit]
+  before_filter :author, :only => [:edit, :update]
 
   def new
     @title = "Create a new diary"
@@ -23,6 +23,15 @@ class DiariesController < ApplicationController
 
   def edit
     @title = "Edit the diary"
+  end
+
+  def update
+    if @diary.update_attributes(params[:diary])
+      flash[:notice] = "Updated the diary settings."
+      redirect_to diaries_path(@diary)
+    else
+      render "diaries/edit"
+    end
   end
 
 private

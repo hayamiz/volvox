@@ -128,4 +128,72 @@ describe DiariesController do
       end
     end
   end
+
+  describe "PUT 'update'" do
+    before(:each) do
+      @diary = Factory(:diary)
+      @attr = {
+        :title => "New title",
+        :desc => "I changed the title of this diary"
+      }
+    end
+
+    describe "for non-signed-in users" do
+      it "should redirect to sign in form" do
+        put :update, :id => @diary, :diary => @attr
+        response.should redirect_to(signin_path)
+      end
+    end
+
+    describe "for signed-in non-authors" do
+      before(:each) do
+        @user = test_sign_in(Factory(:user))
+        @author = Factory(:user, :email => Factory.next(:email))
+        @author.participate(@diary)
+      end
+
+      it "should redirect to sign in form" do
+        put :update, :id => @diary, :diary => @attr
+        response.should redirect_to(signin_path)
+      end
+    end
+
+    describe "for signed-in authors" do
+      before(:each) do
+        @user = test_sign_in(Factory(:user))
+        @user.participate(@diary)
+      end
+
+      describe "failure" do
+        it "should not update the attributes with empty title" do
+          put :update, :id => @diary, :diary => @attr.merge(:title => "")
+          @diary.reload
+          @attr.each do |key, value|
+            @diary[key].should_not == value
+          end
+        end
+
+        it "should render the edit page" do
+          put :update, :id => @diary, :diary => @attr.merge(:title => "")
+          response.should render_template("diaries/edit")
+        end
+      end
+
+      describe "success" do
+        it "should update the attributes" do
+          put :update, :id => @diary, :diary => @attr
+          @diary.reload
+          @attr.each do |key, value|
+            @diary[key].should == value
+          end
+        end
+
+        it "should redirect to the diary with flash message" do
+          put :update, :id => @diary, :diary => @attr
+          response.should redirect_to(diaries_path(@diary))
+          flash[:notice].should =~ /updated/i
+        end
+      end
+    end
+  end
 end
