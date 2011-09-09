@@ -243,6 +243,10 @@ describe DiariesController do
     end
   end
 
+  describe "POST 'create_entry'" do
+
+  end
+
   it "should have deletion" do
     pending "deletion"
   end

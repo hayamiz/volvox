@@ -1,0 +1,8 @@
+<h1>New Entry</h1>
+
+<%= form_for([@diary, @entry]) do |f| %>
+  <%= render 'fields', :f => f %>
+  <div class="actions">
+    <%= f.submit "Create" %>
+  </div>
+<% end  %>
