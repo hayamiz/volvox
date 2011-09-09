@@ -1,0 +1,2 @@
+module EntriesContollerHelper
+end
