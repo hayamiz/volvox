@@ -81,6 +81,30 @@ describe UsersController do
         get :show, :id => @user
         response.should have_selector("h1", :content => @user.name)
       end
+
+      describe "with some diaries" do
+        before(:each) do
+          @diary1 = Factory(:diary)
+          @diary2 = Factory(:diary, :title => Faker::Lorem.sentence(5))
+          @user.participate(@diary1)
+          @user.participate(@diary2)
+        end
+
+        it "should list user's diaries" do
+          get :show, :id => @user
+          [@diary1, @diary2].each do |diary|
+            response.should have_selector("a",
+                                          :content => diary.title,
+                                          :href => diary_path(diary))
+          end
+        end
+      end
+
+      describe "with many diaries" do
+        it "should page pagination links" do
+          pending "to be implemented"
+        end
+      end
     end
   end
 

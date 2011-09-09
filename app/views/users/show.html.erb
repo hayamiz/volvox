@@ -2,3 +2,9 @@
   <%= gravatar_for @user %>
   <%= @user.name %>
 </h1>
+
+<ul class="diary-list">
+  <% @user.diaries.each do |diary| %>
+    <li><%= link_to diary.title, diary_path(diary) %></li>
+  <% end  %>
+</ul>
