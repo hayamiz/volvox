@@ -14,7 +14,8 @@ describe UsersController do
       response.should have_selector("input[name='user[name]'][type='text']")
       response.should have_selector("input[name='user[email]'][type='text']")
       response.should have_selector("input[name='user[password]'][type='password']")
-      response.should have_selector("input[name='user[password_confirmation]'][type='password']")
+      response.should have_selector("input[name='user[password_confirmation]']" \
+                                    "[type='password']")
     end
   end
 
@@ -153,4 +154,6 @@ describe UsersController do
       @user.email.should == @attr[:email]
     end
   end
+
+  
 end
