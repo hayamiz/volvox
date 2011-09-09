@@ -242,4 +242,8 @@ describe DiariesController do
       end
     end
   end
+
+  it "should have deletion" do
+    pending "deletion"
+  end
 end
