@@ -20,12 +20,6 @@ describe EntriesController do
         @user = test_sign_in(Factory(:user))
       end
 
-      it "should not create an entry instance" do
-        lambda do
-          get :new, :diary_id => @diary
-        end.should_not change(Entry, :count)
-      end
-
       it "should redirect to the diary page" do
         get :new, :diary_id => @diary
         response.should redirect_to(@diary)
