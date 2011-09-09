@@ -1,7 +1,24 @@
 
-<h1><%= @diary.title %></h1>
-<h2><%= @diary.desc %></h2>
+<header>
+  <h1><%= @diary.title %></h1>
+  <p><%= @diary.desc %></p>
+  <% if signed_in? %>
+    <ul>
+      <li><%= link_to "Write a new entry", new_diary_entry_path(@diary) %></li>
+      <li><%= link_to "Edit", edit_diary_path(@diary) %></li>
+    </ul>
+  <% end  %>
+</header>
 
-<% if signed_in? %>
-<%= link_to "Edit", edit_diary_path(@diary) %>
+<% @diary.entries.each do |entry| %>
+  <article class="entry">
+    <header>
+      <h2><%= entry.title %></h2>
+      <p>Updated: <%= entry.updated_at %></p>
+    </header>
+    <section>
+      <%= entry.content %>
+    </section>
+  </article>
 <% end  %>
+

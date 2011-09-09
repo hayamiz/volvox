@@ -211,7 +211,7 @@ describe DiariesController do
     it "should have the title and the description" do
       get :show, :id => @diary
       response.should have_selector("h1", :content => @diary.title)
-      response.should have_selector("h2", :content => @diary.desc)
+      response.should have_selector("p", :content => @diary.desc)
     end
 
     it "should not have the link to the edit page" do
@@ -225,6 +225,13 @@ describe DiariesController do
       before(:each) do
         @user = test_sign_in(Factory(:user))
         @user.participate(@diary)
+      end
+
+      it "should have the link to new entry page" do
+        get :show, :id => @diary
+        response.should have_selector("a",
+                                      :href => new_diary_entry_path(@diary),
+                                      :content => "Write a new entry")
       end
 
       it "should have the link to the edit page" do
@@ -241,10 +248,33 @@ describe DiariesController do
         response.response_code.should == 404
       end
     end
-  end
 
-  describe "POST 'create_entry'" do
+    describe "with some entries" do
+      before(:each) do
+        @entries = Array.new
+        5.times do |n|
+          entry = Factory(:entry,
+                          :diary => @diary,
+                          :title => "The #{(n+1).ordinalize} entry",
+                          :content => Faker::Lorem.paragraphs(3))
+          @entries.push(entry)
+        end
+      end
 
+      it "should have entries displayed" do
+        get :show, :id => @diary
+        @entries.each do |entry|
+          response.should have_selector("h2", :content => entry.title)
+          # response.should have_selector("section", :content => entry.content)
+        end
+      end
+    end
+
+    describe "with many entries" do
+      it "should have pagination links" do
+        pending "to be implemented"
+      end
+    end
   end
 
   it "should have deletion" do
