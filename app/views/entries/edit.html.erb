@@ -1,0 +1,8 @@
+<h1>Edit an entry</h1>
+
+<%= form_for([@diary, @entry]) do |f| %>
+  <%= render 'fields', :f => f %>
+  <div class="actions">
+    <%= f.submit "Update" %>
+  </div>
+<% end  %>

@@ -1,1 +1,15 @@
-test
+
+<article class="entry">
+  <header class="entry-header">
+    <h1><%= @entry.title %></h1>
+    <p>Updated at: <%= @entry.updated_at %></p>
+  </header>
+  <section class="entry-body">
+    <%= @entry.content %>
+  </section>
+  <footer>
+    <nav>
+      <%= link_to "&raquo; Back to diary", diary_path(@diary) %>
+    </nav>
+  </footer>
+</article>

@@ -50,6 +50,54 @@ describe EntriesController do
     end
   end
 
+  describe "GET 'edit'" do
+    before(:each) do
+      @diary = Factory(:diary)
+      @entry = Factory(:entry, :diary => @diary)
+    end
+
+    describe "for non-signed-in users" do
+      it "should redirect to signin page" do
+        get :edit, :diary_id => @diary, :id => @entry
+        response.should redirect_to(signin_path)
+      end
+    end
+
+    describe "for non-author users" do
+      before(:each) do
+        @user = test_sign_in(Factory(:user))
+      end
+
+      it "should redirect to the diary page" do
+        get :edit, :diary_id => @diary, :id => @entry
+        response.should redirect_to(@diary)
+      end
+
+      it "should have flash message" do
+        get :edit, :diary_id => @diary, :id => @entry
+        flash[:failure] =~ /not an author/i
+      end
+    end
+
+    describe "for authors" do
+      before(:each) do
+        @user = test_sign_in(Factory(:user))
+        @user.participate(@diary)
+      end
+
+      it "should have the right title" do
+        get :edit, :diary_id => @diary, :id => @entry
+        response.should have_selector("title", :content => "Edit an entry")
+      end
+
+      it "should have form fields" do
+        get :edit, :diary_id => @diary, :id => @entry
+        response.should have_selector("input[type='text'][name='entry[title]']")
+        response.should have_selector("textarea[name='entry[content]']")
+      end
+    end
+  end
+
   describe "POST 'create'" do
     before(:each) do
       @diary = Factory(:diary)
@@ -144,7 +192,62 @@ describe EntriesController do
     end
   end
 
+  describe "GET 'show'" do
+    before(:each) do
+      @diary = Factory(:diary)
+      @entry = Factory(:entry, :diary => @diary)
+    end
+
+    describe "for non-existing diary" do
+      it "should redirect to root page" do
+        get :show, :diary_id => @diary.id+1, :id => @entry
+        response.should redirect_to(root_path)
+      end
+    end
+
+    describe "for non-existing entries" do
+      it "should redirect to diary page" do
+        get :show, :diary_id => @diary, :id => @entry.id+1
+        response.response_code.should == 404
+      end
+    end
+
+    it "should have the right title" do
+      get :show, :diary_id => @diary, :id => @entry
+      response.should have_selector("title", :content => @diary.title)
+      response.should have_selector("title", :content => @entry.title)
+    end
+
+    it "should contain the right content" do
+      get :show, :diary_id => @diary, :id => @entry
+      response.should contain(@entry.content)
+    end
+
+    it "should have the link to the diary" do
+      get :show, :diary_id => @diary, :id => @entry
+      response.should have_selector("a",
+                                    :href => diary_path(@diary),
+                                    :content => "Back to diary")
+    end
+  end
+
   it "should have deletion" do
     pending "deletion"
+  end
+
+  describe "PUT 'update'" do
+    before(:each) do
+      @diary = Factory(:diary)
+      @entry = Factory(:entry, :diary => @diary)
+      @attr = {
+        :title => "New title",
+        :content => "New content is " + Faker::Lorem.sentence(20)
+      }
+    end
+
+    it "should respond to update" do
+      pending "to be written"
+      put :update, :diary_id => @diary, :id => @entry, :entry => @attr
+    end
   end
 end

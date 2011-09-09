@@ -2,6 +2,7 @@ class EntriesController < ApplicationController
   before_filter :authenticate, :only => [:new, :edit, :create, :update]
   before_filter :diary_exist
   before_filter :author_of_diary, :only => [:new, :edit, :create, :update]
+  before_filter :entry_exist, :only => [:edit, :update, :show]
 
   def new
     @entry = Entry.new
@@ -18,12 +19,27 @@ class EntriesController < ApplicationController
     end
   end
 
+  def edit
+    @title = "Edit an entry"
+  end
+
+  def show
+    @title = "#{@diary.title} | #{@entry.title}"
+  end
+
 private
   def diary_exist
     @diary = Diary.find_by_id(params[:diary_id])
     if @diary.nil?
       flash[:error] = "You tried to access a non-existing diary."
       redirect_to root_path
+    end
+  end
+
+  def entry_exist
+    @entry = Entry.find_by_id(params[:id])
+    if @entry.nil?
+      not_found
     end
   end
 
