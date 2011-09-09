@@ -268,6 +268,16 @@ describe DiariesController do
           # response.should have_selector("section", :content => entry.content)
         end
       end
+
+      it "should have links to entries" do
+        get :show, :id => @diary
+        @entries.each do |entry|
+          response.should have_selector("a",
+                                        :href => diary_entry_path(@diary, entry),
+                                        :content => entry.title)
+          # response.should have_selector("section", :content => entry.content)
+        end
+      end
     end
 
     describe "with many entries" do

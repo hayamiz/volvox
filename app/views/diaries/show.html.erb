@@ -13,7 +13,7 @@
 <% @diary.entries.each do |entry| %>
   <article class="entry">
     <header>
-      <h2><%= entry.title %></h2>
+      <h2><%= link_to entry.title, [@diary, entry] %></h2>
       <p>Updated: <%= entry.updated_at %></p>
     </header>
     <section>
