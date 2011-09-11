@@ -255,8 +255,8 @@ describe DiariesController do
         5.times do |n|
           entry = Factory(:entry,
                           :diary => @diary,
-                          :title => "The #{(n+1).ordinalize} entry",
-                          :content => Faker::Lorem.paragraphs(3))
+                          :date => Factory.next(:date),
+                          :memo => Faker::Lorem.paragraphs(3))
           @entries.push(entry)
         end
       end
@@ -264,7 +264,7 @@ describe DiariesController do
       it "should have entries displayed" do
         get :show, :id => @diary
         @entries.each do |entry|
-          response.should have_selector("h2", :content => entry.title)
+          response.should have_selector("h2", :content => entry.date.to_s)
           # response.should have_selector("section", :content => entry.content)
         end
       end
@@ -274,7 +274,7 @@ describe DiariesController do
         @entries.each do |entry|
           response.should have_selector("a",
                                         :href => diary_entry_path(@diary, entry),
-                                        :content => entry.title)
+                                        :content => entry.date.to_s)
           # response.should have_selector("section", :content => entry.content)
         end
       end
