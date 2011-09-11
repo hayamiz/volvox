@@ -16,6 +16,9 @@ module ApplicationHelper
   end
 
   def markdown(str)
-    BlueCloth.new(str).to_html
+    BlueCloth.new(sanitize(str,
+                           :tags => ['table', 'tr', 'td', 'div', 'span', 'section',
+                                     'br'],
+                           :attributes => ['id', 'class', 'style'])).to_html
   end
 end
