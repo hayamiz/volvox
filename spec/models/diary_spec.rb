@@ -65,9 +65,10 @@ describe Diary do
     end
 
     it "should have entiries sorted" do
-      entry1 = Factory(:entry, :diary => @diary, :created_at => 1.day.ago)
-      entry2 = Factory(:entry, :diary => @diary, :created_at => Time.now)
-      @diary.entries.should == [entry2, entry1]
+      entry1 = Factory(:entry, :diary => @diary, :date => 1.day.ago.to_date)
+      entry2 = Factory(:entry, :diary => @diary, :date => 2.day.ago.to_date)
+      entry3 = Factory(:entry, :diary => @diary, :date => Time.now.to_date)
+      @diary.entries.should == [entry3, entry1, entry2]
     end
   end
 end

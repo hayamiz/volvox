@@ -3,7 +3,7 @@ class Entry < ActiveRecord::Base
   attr_accessible :date, :temperature, :humidity, :action_feed, :action_care,
                   :pet_feces, :pet_physical, :memo
   belongs_to :diary
-  default_scope :order => 'entries.created_at DESC'
+  default_scope :order => 'entries.date DESC'
 
   validates(:date, :presence => true,
             :uniqueness => true)
