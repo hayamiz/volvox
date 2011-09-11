@@ -9,6 +9,7 @@ gem 'sqlite3', '1.3.4'
 gem 'will_paginate'
 gem 'gravatar_image_tag', '1.0.0'
 gem 'faker', '0.9.5'
+gem 'bluecloth'
 
 # Gems used only for assets and not required
 # in production environments by default.
