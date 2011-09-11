@@ -286,6 +286,12 @@ describe EntriesController do
       response.should contain(@entry.humidity)
     end
 
+    it "should show availability of attributes" do
+      entry = Factory(:empty_entry, :diary => @diary, :date => Factory.next(:date))
+      get :show, :diary_id => @diary, :id => entry
+      response.should have_selector("section.entry-body", :content => "N/A")
+    end
+
     it "should sanitized malicious contents" do
       text = Faker::Lorem.sentence(20)
       entry = Factory(:entry,

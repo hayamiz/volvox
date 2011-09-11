@@ -3,16 +3,16 @@
   <header class="entry-header">
     <h1><%= @entry.date.to_s %></h1>
     <p>Updated at: <%= @entry.updated_at %></p>
-    <p>Temperature: <%= @entry.temperature %>&#x2103;, Humidity: <%= @entry.humidity %>% </p>
+    <p>Temperature: <%= @entry.temperature || "N/A" %>&#x2103;, Humidity: <%= @entry.humidity || "N/A" %>% </p>
   </header>
   <section class="entry-body">
     <h2>Feed</h2>
-    <%=raw markdown(@entry.action_feed) %>
+    <%=raw markdown(@entry.action_feed) || "N/A" %>
     <h2>Care</h2>
-    <%=raw markdown(@entry.action_care) %>
-    <%=raw markdown(@entry.pet_feces) %>
-    <%=raw markdown(@entry.pet_physical) %>
-    <%=raw markdown(@entry.memo) %>
+    <%=raw markdown(@entry.action_care) || "N/A" %>
+    <%=raw markdown(@entry.pet_feces) || "N/A" %>
+    <%=raw markdown(@entry.pet_physical) || "N/A" %>
+    <%=raw markdown(@entry.memo) || "N/A" %>
   </section>
   <footer>
     <nav>

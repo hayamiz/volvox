@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe ApplicationHelper do
   describe "markdown method" do
+    it "should return nil if nil given" do
+      markdown(nil).should be_nil
+    end
+
     it "should encode markdown text into html" do
       markdown("hello").should include("<p>hello</p>")
       markdown("- hello").should include("<ul>\n<li>hello</li>\n</ul>")

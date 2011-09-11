@@ -16,6 +16,7 @@ module ApplicationHelper
   end
 
   def markdown(str)
+    return nil if str.nil?
     BlueCloth.new(sanitize(str,
                            :tags => ['table', 'tr', 'td', 'div', 'span', 'section',
                                      'br'],

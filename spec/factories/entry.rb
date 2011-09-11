@@ -9,6 +9,10 @@ Factory.define :entry do |entry|
   entry.memo		"so sunny day"
 end
 
+Factory.define :empty_entry, :class => Entry do |entry|
+  entry.date		Date.today
+end
+
 
 Factory.sequence :date do |n|
   Date.today + n + 1
