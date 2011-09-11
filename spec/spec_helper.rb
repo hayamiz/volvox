@@ -69,8 +69,4 @@ RSpec.configure do |config|
     fill_in :password,	:with => user.password
     click_button
   end
-
-  def markdown(str)
-    BlueCloth.new(str).to_html
-  end
 end

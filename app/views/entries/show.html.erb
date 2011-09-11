@@ -6,7 +6,13 @@
     <p>Temperature: <%= @entry.temperature %>&#x2103;, Humidity: <%= @entry.humidity %>% </p>
   </header>
   <section class="entry-body">
-    <%= @entry.memo %>
+    <h2>Feed</h2>
+    <%=raw markdown(@entry.action_feed) %>
+    <h2>Care</h2>
+    <%=raw markdown(@entry.action_care) %>
+    <%=raw markdown(@entry.pet_feces) %>
+    <%=raw markdown(@entry.pet_physical) %>
+    <%=raw markdown(@entry.memo) %>
   </section>
   <footer>
     <nav>

@@ -275,14 +275,15 @@ describe EntriesController do
 
     it "should contain the right content" do
       get :show, :diary_id => @diary, :id => @entry
+      response.body.should include(BlueCloth.new(@entry.action_feed).to_html)
+      response.body.should include(BlueCloth.new(@entry.action_care).to_html)
+      response.body.should include(BlueCloth.new(@entry.pet_feces).to_html)
+      response.body.should include(BlueCloth.new(@entry.pet_physical).to_html)
+      response.body.should include(BlueCloth.new(@entry.memo).to_html)
+
       pending ""
       response.should contain(@entry.temperature)
       response.should contain(@entry.humidity)
-      response.should contain(markdown(@entry.action_feed))
-      response.should contain(markdown(@entry.action_care))
-      response.should contain(markdown(@entry.pet_feces))
-      response.should contain(markdown(@entry.pet_physical))
-      response.should contain(markdown(@entry.memo))
     end
 
     it "should sanitized malicious contents" do
