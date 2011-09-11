@@ -34,6 +34,18 @@ class EntriesController < ApplicationController
     @title = "Edit an entry"
   end
 
+  def update
+    begin
+      if @entry.update_attributes(params[:entry])
+        redirect_to([@diary, @entry])
+        return
+      end
+    rescue NoMethodError => err
+      logger.error(err)
+    end
+    render 'entries/edit'
+  end
+
   def show
     @title = "#{@diary.title} | #{@entry.date.to_s}"
   end
@@ -57,7 +69,6 @@ private
   def author_of_diary
     unless current_user.author?(@diary)
       flash[:error] = "You are not an author of '#{@diary.title}'"
-      logger.debug("non author access: diary_path(@diary)=#{diary_path(@diary)}")
       redirect_to diary_path(@diary)
     end
   end
