@@ -2,26 +2,35 @@
 <html>
   <head>
     <title><%= title %></title>
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css'>
     <%= stylesheet_link_tag    "application" %>
+    <%= stylesheet_link_tag    "application", 'media' => 'print' %>
     <%= javascript_include_tag "application" %>
+    <!--[if lt IE 8]>
+    <%= stylesheet_link_tag 'application-ie.css' %>
+    <![endif]-->
     <%= csrf_meta_tags %>
   </head>
   <body>
     <div class="container">
-      <header>
-        <%= link_to(image_tag("volvox-logo.png"), root_path) %>
-        <nav>
+      <header class="main">
+        <nav class="round">
           <ul>
-            <li><%= link_to "Home", root_path %></li>
-            <% if signed_in? %>
-            <li><%= link_to "Setting", edit_user_path(current_user) %></li>
-            <li><%= link_to "Sign out", signout_path %></li>
-            <% else %>
-            <li><%= link_to "Sign in", signin_path %></li>
+	    <% if signed_in? %>
+              <li><%= "signed in as #{current_user.name}" %></li>
             <% end %>
-            <%= "signed in as #{current_user.name}" if signed_in? %>
+            <li><%= link_to "Home", root_path, :class => "blue button" %></li>
+            <% if signed_in? %>
+              <li><%= link_to "Setting", edit_user_path(current_user), :class => "blue button" %></li>
+              <li><%= link_to "Sign out", signout_path, :class => "red button" %></li>
+            <% else %>
+              <li><%= link_to "Sign in", signin_path, :class => "blue button" %></li>
+            <% end %>
           </ul>
         </nav>
+	<h1>VOLVOX</h1>
+	<h2>Your pet diary</h2>
       </header>
 
       <section class="main round">
