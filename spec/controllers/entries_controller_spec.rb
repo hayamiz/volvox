@@ -270,12 +270,30 @@ describe EntriesController do
     it "should have the right title" do
       get :show, :diary_id => @diary, :id => @entry
       response.should have_selector("title", :content => @diary.title)
-      response.should have_selector("title", :content => @entry.title)
+      response.should have_selector("title", :content => @entry.date.to_s)
     end
 
     it "should contain the right content" do
       get :show, :diary_id => @diary, :id => @entry
-      response.should contain(@entry.content)
+      pending ""
+      response.should contain(@entry.temperature)
+      response.should contain(@entry.humidity)
+      response.should contain(markdown(@entry.action_feed))
+      response.should contain(markdown(@entry.action_care))
+      response.should contain(markdown(@entry.pet_feces))
+      response.should contain(markdown(@entry.pet_physical))
+      response.should contain(markdown(@entry.memo))
+    end
+
+    it "should sanitized malicious contents" do
+      text = Faker::Lorem.sentence(20)
+      entry = Factory(:entry,
+                      :diary => @diary,
+                      :date => Factory.next(:date),
+                      :memo => text + "<script>alert('hello world')</script>")
+      get :show, :diary_id => @diary, :id => entry
+      response.body.should_not include("<script>alert('hello world')</script>")
+      response.body.should contain(text)
     end
 
     it "should have the link to the diary" do
@@ -295,8 +313,10 @@ describe EntriesController do
       @diary = Factory(:diary)
       @entry = Factory(:entry, :diary => @diary)
       @attr = {
-        :title => "New title",
-        :content => "New content is " + Faker::Lorem.sentence(20)
+        "date(1i)" => "2012",
+        "date(2i)" => "10",
+        "date(3i)" => "13",
+        :memo => "This is a PUT test.",
       }
     end
 

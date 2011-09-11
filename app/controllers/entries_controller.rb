@@ -35,7 +35,7 @@ class EntriesController < ApplicationController
   end
 
   def show
-    @title = "#{@diary.title} | #{@entry.title}"
+    @title = "#{@diary.title} | #{@entry.date.to_s}"
   end
 
 private

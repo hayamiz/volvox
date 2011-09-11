@@ -1,11 +1,12 @@
 
 <article class="entry">
   <header class="entry-header">
-    <h1><%= @entry.title %></h1>
+    <h1><%= @entry.date.to_s %></h1>
     <p>Updated at: <%= @entry.updated_at %></p>
+    <p>Temperature: <%= @entry.temperature %>&#x2103;, Humidity: <%= @entry.humidity %>% </p>
   </header>
   <section class="entry-body">
-    <%= @entry.content %>
+    <%= @entry.memo %>
   </section>
   <footer>
     <nav>
