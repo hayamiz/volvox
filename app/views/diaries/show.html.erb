@@ -13,7 +13,7 @@
 <% @diary.entries.each do |entry| %>
   <article class="entry round10">
     <header>
-      <p class="aux">Updated: <%= entry.updated_at.localtime.strftime("%Y/%m/%d %H:%M:%S") %></p>
+      <p class="meta">Updated: <%= entry.updated_at.localtime.strftime("%Y/%m/%d %H:%M:%S") %></p>
       <h2><%= link_to entry.date.to_s, [@diary, entry] %></h2>
     </header>
   </article>

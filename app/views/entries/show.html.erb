@@ -1,18 +1,45 @@
 
-<article class="entry">
+<article class="entry round10">
   <header class="entry-header">
-    <h1><%= @entry.date.to_s %></h1>
-    <p>Updated at: <%= @entry.updated_at %></p>
-    <p>Temperature: <%= @entry.temperature || "N/A" %>&#x2103;, Humidity: <%= @entry.humidity || "N/A" %>% </p>
+    <p class="meta">Temperature: <%= @entry.temperature || "N/A" %>&#x2103;, Humidity: <%= @entry.humidity || "N/A" %>% </p>
+    <h1 class="round10"><%= @entry.date.to_s %></h1>
+    <p style="text-align: right; margin-top: -10px; font-size: 80%;">Updated at: <%= @entry.updated_at.localtime %></p>
   </header>
   <section class="entry-body">
-    <h2>Feed</h2>
-    <%=raw markdown(@entry.action_feed) || "N/A" %>
-    <h2>Care</h2>
-    <%=raw markdown(@entry.action_care) || "N/A" %>
-    <%=raw markdown(@entry.pet_feces) || "N/A" %>
-    <%=raw markdown(@entry.pet_physical) || "N/A" %>
-    <%=raw markdown(@entry.memo) || "N/A" %>
+    <table>
+      <tr>
+	<th>Feed</th>
+	<th>Care</th>
+      </tr>
+      <tr>
+	<td><%=raw markdown(@entry.action_feed) || "N/A" %></td>
+	<td><%=raw markdown(@entry.action_care) || "N/A" %></td>
+      </tr>
+    </table>
+
+    <table>
+      <tr>
+	<th>Feces</th>
+      </tr>
+      <tr>
+	<td><%=raw markdown(@entry.pet_feces) || "N/A" %></td>
+      </tr>
+      <tr>
+	<th>Physical conditions</th>
+      </tr>
+      <tr>
+	<td><%=raw markdown(@entry.pet_physical) || "N/A" %></td>
+      </tr>
+    </table>
+
+    <table>
+      <tr>
+	<th>Memo</th>
+      </tr>
+      <tr>
+	<td><%=raw markdown(@entry.memo) || "N/A" %></td>
+      </tr>
+    </table>
   </section>
   <footer>
     <nav>
