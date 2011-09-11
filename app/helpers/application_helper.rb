@@ -14,4 +14,8 @@ module ApplicationHelper
                        :class => 'gravatar',
                        :gravatar => options)
   end
+
+  def markdown(str)
+    BlueCloth.new(str).to_html
+  end
 end
