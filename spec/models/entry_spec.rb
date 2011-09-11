@@ -51,6 +51,15 @@ describe Entry do
       entry.should_not be_valid
     end
 
+    it "should allow duplicated date in different diary" do
+      @diary.entries.create!(@attr)
+      diary = Factory(:diary, :title => Faker::Lorem.sentence(5))
+      diary.id.should_not == @diary.id
+      entry = diary.entries.build(@attr.merge(:date => @attr[:date]))
+      p entry.errors
+      entry.should be_valid
+    end
+
     it "should reject an empty date" do
       @diary.entries.build(@attr.merge(:date => nil)).should_not be_valid
     end
