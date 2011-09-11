@@ -44,8 +44,22 @@ describe EntriesController do
 
       it "should have form fields" do
         get :new, :diary_id => @diary
-        response.should have_selector("input[type='text'][name='entry[title]']")
-        response.should have_selector("textarea[name='entry[content]']")
+        response.should have_selector("input[type='text'][name='entry[temperature]']")
+        response.should have_selector("input[type='text'][name='entry[humidity]']")
+        response.should have_selector("textarea[name='entry[action_feed]']")
+        response.should have_selector("textarea[name='entry[action_care]']")
+        response.should have_selector("textarea[name='entry[pet_feces]']")
+        response.should have_selector("textarea[name='entry[pet_physical]']")
+        response.should have_selector("textarea[name='entry[memo]']")
+        response.should have_selector("select[name='entry[date(1i)]']")
+        response.should have_selector("select[name='entry[date(2i)]']")
+        response.should have_selector("select[name='entry[date(3i)]']")
+      end
+
+      it "should not have form fields for obsolete attributes" do
+        get :new, :diary_id => @diary
+        response.should_not have_selector("input[type='text'][name='entry[title]']")
+        response.should_not have_selector("textarea[name='entry[content]']")
       end
     end
   end
@@ -91,9 +105,23 @@ describe EntriesController do
       end
 
       it "should have form fields" do
-        get :edit, :diary_id => @diary, :id => @entry
-        response.should have_selector("input[type='text'][name='entry[title]']")
-        response.should have_selector("textarea[name='entry[content]']")
+        get :new, :diary_id => @diary
+        response.should have_selector("input[type='text'][name='entry[temperature]']")
+        response.should have_selector("input[type='text'][name='entry[humidity]']")
+        response.should have_selector("textarea[name='entry[action_feed]']")
+        response.should have_selector("textarea[name='entry[action_care]']")
+        response.should have_selector("textarea[name='entry[pet_feces]']")
+        response.should have_selector("textarea[name='entry[pet_physical]']")
+        response.should have_selector("textarea[name='entry[memo]']")
+        response.should have_selector("select[name='entry[date(1i)]']")
+        response.should have_selector("select[name='entry[date(2i)]']")
+        response.should have_selector("select[name='entry[date(3i)]']")
+      end
+
+      it "should not have form fields for obsolete attributes" do
+        get :new, :diary_id => @diary
+        response.should_not have_selector("input[type='text'][name='entry[title]']")
+        response.should_not have_selector("textarea[name='entry[content]']")
       end
     end
   end

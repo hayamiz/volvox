@@ -1,9 +1,35 @@
 <%= render 'shared/error_messages', :object => f.object %>
 <div class="field">
-  <%= f.label :title %><br>
-  <%= f.text_field :title %>
+  <%= f.label :date %><br>
+  <%= f.date_select :date %>
 </div>
 <div class="field">
-  <%= f.label :content, "Description" %><br>
-  <%= f.text_area :content %>
+  <%= f.label :temperature %><br>
+  <%= f.text_field :temperature %>
 </div>
+<div class="field">
+  <%= f.label :humidity %><br>
+  <%= f.text_field :humidity %>
+</div>
+<div class="field">
+  <%= f.label :action_feed %><br>
+  <%= f.text_area :action_feed %>
+</div>
+<div class="field">
+  <%= f.label :action_care %><br>
+  <%= f.text_area :action_care %>
+</div>
+<div class="field">
+  <%= f.label :pet_feces %><br>
+  <%= f.text_area :pet_feces %>
+</div>
+<div class="field">
+  <%= f.label :pet_physical %><br>
+  <%= f.text_area :pet_physical %>
+</div>
+<div class="field">
+  <%= f.label :memo %><br>
+  <%= f.text_area :memo %>
+</div>
+
+
