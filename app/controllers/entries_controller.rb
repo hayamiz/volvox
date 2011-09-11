@@ -10,7 +10,18 @@ class EntriesController < ApplicationController
   end
 
   def create
-    @entry = @diary.entries.build(params[:entry])
+    begin
+      @entry = @diary.entries.build(params[:entry])
+    rescue NoMethodError
+      attr = params[:entry].dup
+      attr.delete("date(1i)")
+      attr.delete("date(2i)")
+      attr.delete("date(3i)")
+      @entry = @diary.entries.build(attr)
+      render 'entries/new'
+      return
+    end
+
     if @entry.save
       flash[:success] = "Successfully created a new entry"
       redirect_to([@diary, @entry])

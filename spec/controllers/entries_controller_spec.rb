@@ -130,8 +130,10 @@ describe EntriesController do
     before(:each) do
       @diary = Factory(:diary)
       @attr = {
-        :title => "A test entry",
-        :content => "This is a test content",
+        "date(1i)" => "2011",
+        "date(2i)" => "9",
+        "date(3i)" => "12",
+        :memo => "This is a test.",
       }
     end
     
@@ -182,20 +184,45 @@ describe EntriesController do
           response.should redirect_to(root_path)
         end
 
-        it "should reject empty title" do
+        it "should not raise an error with empty date" do
           lambda do
-            post :create, :diary_id => @diary, :entry => @attr.merge(:title => "")
-          end.should_not change(Entry, :count)
+            attr = @attr.merge("date(1i)" => nil,
+                               "date(2i)" => "9",
+                               "date(3i)" => "12")
+            post :create, :diary_id => @diary, :entry => attr
+          end.should_not raise_error
+
+          lambda do
+            attr = @attr.merge("date(1i)" => nil,
+                               "date(2i)" => nil,
+                               "date(3i)" => nil)
+            post :create, :diary_id => @diary, :entry => attr
+          end.should_not raise_error
         end
-        
-        it "should reject empty content" do
+
+        it "should not raise an error with invalid date" do
           lambda do
-            post :create, :diary_id => @diary, :entry => @attr.merge(:content => "")
+            attr = @attr.merge("date(1i)" => "hoge",
+                               "date(2i)" => "9",
+                               "date(3i)" => "12")
+            post :create, :diary_id => @diary, :entry => attr
+          end.should_not raise_error(StandardError)
+        end
+
+        it "should reject empty date" do
+          lambda do
+            attr = @attr.merge("date(1i)" => nil,
+                               "date(2i)" => nil,
+                               "date(3i)" => nil)
+            post :create, :diary_id => @diary, :entry => attr
           end.should_not change(Entry, :count)
         end
 
         it "should render new page with invalid inputs" do
-          post :create, :diary_id => @diary, :entry => @attr.merge(:title => "")
+          attr = @attr.merge("date(1i)" => nil,
+                             "date(2i)" => nil,
+                             "date(3i)" => nil)
+          post :create, :diary_id => @diary, :entry => attr
           response.should render_template("entries/new")
         end
       end
