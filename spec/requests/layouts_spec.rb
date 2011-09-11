@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe "Layouts" do
+  it "a logo should be linked to root path" do
+    visit root_path
+    response.should have_selector("h1>a",
+                                  :href => root_path)
+  end
+
   describe "navigation links" do
     it "should have Home link" do
       visit root_path

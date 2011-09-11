@@ -1,5 +1,6 @@
+/* -*- mode: css -*- */
 
-/* 
+/*
  * using color scheme: http://colorschemedesigner.com/#0n41Tuullw0w0
  */
 
@@ -46,7 +47,15 @@ header.main {
     color: #4072B7;
     text-align: left;
     margin-bottom: 0;
+
+    a {
+      color: #4072B7;
+      text-decoration: none;
+    }
+    a:visited { color: #4072B7; }
+    a:hover   { color: #4072B7; }
   }
+
   h2 {
     font-family: 'Merienda One', cursive;
     font-size: 20px;
@@ -55,6 +64,13 @@ header.main {
     margin-left: 8em;
     text-shadow: 2px 2px 2px rgba(255,255,255,0.25);
     color: white;
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+    a:visited { color: white; }
+    a:hover   { color: white; }
   }
 }
 
@@ -85,10 +101,16 @@ section.main {
 /* .blue.button:hover                 { background-color: #2575cf; } */
 
 
-.round {
+.round .round5 {
   -moz-border-radius:    5px;
   -webkit-border-radius: 5px;
   border-radius:         5px;
+}
+
+.round .round10 {
+  -moz-border-radius:    10px;
+  -webkit-border-radius: 10px;
+  border-radius:         10px;
 }
 
 a.signup_button {
@@ -107,6 +129,22 @@ a.signup_button:hover {
   text-decoration: underline;
 }
 
+article.entry {
+  background-color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  border-right: 1px solid rgba(0, 0, 0, 0.25);
+
+  header {
+    h2 {
+      clear: left;
+    }
+    .aux {
+      float: right;
+    }
+  }
+}
 
 section.console {
   font-family: monospace;
