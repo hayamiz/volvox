@@ -327,9 +327,51 @@ describe EntriesController do
       }
     end
 
-    it "should respond to update" do
-      pending "to be written"
-      put :update, :diary_id => @diary, :id => @entry, :entry => @attr
+    describe "success" do
+      it "should succeed" do
+        put :update, :diary_id => @diary, :id => @entry, :entry => @attr
+        @entry.reload
+        @entry.date.year.should == 2012
+        @entry.date.month.should == 10
+        @entry.date.day.should == 13
+        @entry.memo.should == @attr[:memo]
+      end
+
+      it "should should redirect to the entry page on success" do
+        put :update, :diary_id => @diary, :id => @entry, :entry => @attr
+        response.should redirect_to(diary_entry_path(@diary, @entry))
+      end
+
+      it "should should have flash message" do
+        put :update, :diary_id => @diary, :id => @entry, :entry => @attr
+        flash[:success] =~ /entry updated/
+      end
+    end
+
+    describe "failure" do
+      before(:each) do
+        @attr = @attr.merge("date(1i)" => nil)
+      end
+
+      it "should fail with invalid data" do
+        put :update, :diary_id => @diary, :id => @entry, :entry => @attr
+        @entry.reload
+        @entry.date.year.should_not == 2012
+        @entry.date.month.should_not == 10
+        @entry.date.day.should_not == 13
+        @entry.memo.should_not == @attr[:memo]
+      end
+
+      it "should render edit page" do
+        put :update, :diary_id => @diary, :id => @entry, :entry => @attr
+        response.should render_template("entries/edit")
+        response.should have_selector("input[type='text'][name='entry[temperature]']")
+      end
+
+      it "should have error messages" do
+        put :update, :diary_id => @diary, :id => @entry, :entry => @attr
+        response.should have_selector("div#error_explanation")
+      end
     end
   end
 end

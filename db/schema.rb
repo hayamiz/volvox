@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110911170314) do
+ActiveRecord::Schema.define(:version => 20110911211209) do
 
   create_table "authorships", :force => true do |t|
     t.integer  "user_id"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(:version => 20110911170314) do
     t.text     "pet_physical"
     t.text     "memo"
   end
+
+  add_index "entries", ["date"], :name => "idx_date_unique", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "name"
