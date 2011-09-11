@@ -8,3 +8,8 @@ Factory.define :entry do |entry|
   entry.pet_physical	"Very good"
   entry.memo		"so sunny day"
 end
+
+
+Factory.sequence :date do |n|
+  Date.today + n + 1
+end
