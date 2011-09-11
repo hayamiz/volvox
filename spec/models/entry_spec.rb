@@ -26,7 +26,7 @@ describe Entry do
     before(:each) do
       @diary = Factory(:diary)
       @attr = {
-        :date => Time.now,
+        :date => Date.today,
         :temperature => 25.5,
         :humidity => 60.0,
         :action_feed => "gave Brisky a lot",
@@ -61,10 +61,18 @@ end
 #
 # Table name: entries
 #
-#  id         :integer         not null, primary key
-#  created_at :datetime
-#  updated_at :datetime
-#  diary_id   :integer
+#  id           :integer         not null, primary key
+#  created_at   :datetime
+#  updated_at   :datetime
+#  diary_id     :integer
+#  date         :date
+#  temperature  :float
+#  humidity     :float
+#  action_feed  :text
+#  action_care  :text
+#  pet_feces    :text
+#  pet_physical :text
+#  memo         :text
 #
 
 
