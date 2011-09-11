@@ -1,12 +1,39 @@
 require 'spec_helper'
 
 describe Entry do
+
+  describe "attributes" do
+    before(:each) do
+      @entry = Entry.new
+    end
+
+    it("should respond to date")	{ @entry.should respond_to(:date) }
+    it("should respond to temperature")	{ @entry.should respond_to(:temperature) }
+    it("should respond to humidity")	{ @entry.should respond_to(:humidity) }
+    it("should respond to action_feed")	{ @entry.should respond_to(:action_feed) }
+    it("should respond to action_care")	{ @entry.should respond_to(:action_care) }
+    it("should respond to pet_feces")	{ @entry.should respond_to(:pet_feces) }
+    it("should respond to pet_physical"){ @entry.should respond_to(:pet_physical) }
+    it("should respond to memo")	{ @entry.should respond_to(:memo) }
+
+    describe "obsolete attributes" do
+      it("should not respond to title"){ @entry.should_not respond_to(:title) }
+      it("should not respond to content"){ @entry.should_not respond_to(:content)}
+    end
+  end
+
   describe "validation" do
     before(:each) do
       @diary = Factory(:diary)
       @attr = {
-        :title => "The First Entry of my diary",
-        :content => "Hello, my friend.",
+        :date => Time.now,
+        :temperature => 25.5,
+        :humidity => 60.0,
+        :action_feed => "gave Brisky a lot",
+        :action_care => "cleaned up the steel wheel",
+        :pet_feces => "Many. black.",
+        :pet_physical => "Kept Scratching her body. Itchy?",
+        :memo => "nothing"
       }
     end
 
@@ -14,20 +41,8 @@ describe Entry do
       @diary.entries.create!(@attr)
     end
 
-    it "should reject an empty title" do
-      @diary.entries.build(@attr.merge(:title => "")).should_not be_valid
-    end
-
-    it "should reject an empty content" do
-      @diary.entries.build(@attr.merge(:content => "")).should_not be_valid
-    end
-
-    it "should reject a too long title" do
-      @diary.entries.build(@attr.merge(:title => "a"*256)).should_not be_valid
-    end
-
-    it "should accept a not so long title" do
-      @diary.entries.build(@attr.merge(:title => "a"*255)).should be_valid
+    it "should reject an empty date" do
+      @diary.entries.build(@attr.merge(:date => nil)).should_not be_valid
     end
   end
 
@@ -47,10 +62,10 @@ end
 # Table name: entries
 #
 #  id         :integer         not null, primary key
-#  title      :string(255)
-#  content    :text
 #  created_at :datetime
 #  updated_at :datetime
 #  diary_id   :integer
 #
+
+
 
