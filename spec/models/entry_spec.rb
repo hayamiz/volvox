@@ -41,6 +41,16 @@ describe Entry do
       @diary.entries.create!(@attr)
     end
 
+    it "should accept an entry with only date" do
+      @diary.entries.build(:date => Date.new(2011, 9, 12)).should be_valid
+    end
+
+    it "should reject duplicated date" do
+      @diary.entries.create!(@attr)
+      entry = @diary.entries.build(:date => @attr[:date])
+      entry.should_not be_valid
+    end
+
     it "should reject an empty date" do
       @diary.entries.build(@attr.merge(:date => nil)).should_not be_valid
     end

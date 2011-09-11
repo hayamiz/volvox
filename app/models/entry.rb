@@ -5,7 +5,8 @@ class Entry < ActiveRecord::Base
   belongs_to :diary
   default_scope :order => 'entries.created_at DESC'
 
-  validates(:date, :presence => true)
+  validates(:date, :presence => true,
+            :uniqueness => true)
 end
 # == Schema Information
 #
