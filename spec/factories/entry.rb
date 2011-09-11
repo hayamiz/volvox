@@ -1,4 +1,10 @@
 Factory.define :entry do |entry|
-  entry.title	"The first entry for testing"
-  entry.content	Faker::Lorem.sentence(10)
+  entry.date		Date.today
+  entry.temperature	23.4
+  entry.humidity	50.0
+  entry.action_feed	"Gave food a lot"
+  entry.action_care	"Cleaned up the cage"
+  entry.pet_feces	"So much"
+  entry.pet_physical	"Very good"
+  entry.memo		"so sunny day"
 end
