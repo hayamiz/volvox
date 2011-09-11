@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(:version => 20110911211209) do
     t.text     "memo"
   end
 
-  add_index "entries", ["date"], :name => "idx_date_unique", :unique => true
+  add_index "entries", ["date", "diary_id"], :name => "idx_diary_id_date_unique", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "name"
