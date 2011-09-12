@@ -309,6 +309,37 @@ describe EntriesController do
                                     :href => diary_path(@diary),
                                     :content => "Back to diary")
     end
+
+    describe "for non-authors" do
+      it "should not show Edit link for singed-in non-auther users" do
+        @user = test_sign_in(Factory(:user))
+        get :show, :diary_id => @diary, :id => @entry
+        response.should_not have_selector("a",
+                                          :href => edit_diary_entry_path(@diary, @entry),
+                                          :content => "Edit")
+      end
+
+      it "should not show Edit link for non-singed-in users" do
+        get :show, :diary_id => @diary, :id => @entry
+        response.should_not have_selector("a",
+                                          :href => edit_diary_entry_path(@diary, @entry),
+                                          :content => "Edit")
+      end
+    end
+
+    describe "for authors" do
+      before(:each) do
+        @user = test_sign_in(Factory(:user))
+        @user.participate(@diary)
+      end
+
+      it "should see Edit link" do
+        get :show, :diary_id => @diary, :id => @entry
+        response.should have_selector("a",
+                                      :href => edit_diary_entry_path(@diary, @entry),
+                                      :content => "Edit")
+      end
+    end
   end
 
   it "should have deletion" do
