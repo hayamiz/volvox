@@ -30,15 +30,16 @@ gem 'therubyracer', '0.9.4'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
+gem 'rspec-rails', '2.6.1'
+gem 'rcov'
+
 group :development do
-  gem 'rspec-rails', '2.6.1'
   gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
 end
 
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
-  gem 'rspec-rails', '2.6.1'
   gem 'webrat', '0.7.3'
   gem 'factory_girl_rails', '1.2.0'
   gem 'spork', '0.8.5'

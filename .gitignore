@@ -6,3 +6,4 @@ tmp/
 Gemfile.lock
 /bin/*
 /boru.csv
+/coverage/*
