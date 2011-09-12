@@ -56,7 +56,6 @@ describe Entry do
       diary = Factory(:diary, :title => Faker::Lorem.sentence(5))
       diary.id.should_not == @diary.id
       entry = diary.entries.build(@attr.merge(:date => @attr[:date]))
-      p entry.errors
       entry.should be_valid
     end
 
