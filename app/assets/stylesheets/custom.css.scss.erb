@@ -102,17 +102,24 @@ section.main {
 .red.button, .red.button:visited   { background-color: #e62727; }
 /* .blue.button:hover                 { background-color: #2575cf; } */
 
-
-.round .round5 {
+@mixin round5 {
   -moz-border-radius:    5px;
   -webkit-border-radius: 5px;
   border-radius:         5px;
 }
 
-.round .round10 {
+@mixin round10 {
   -moz-border-radius:    10px;
   -webkit-border-radius: 10px;
   border-radius:         10px;
+}
+
+.round, .round5 {
+  @include round5
+}
+
+.round10 {
+  @include round10
 }
 
 a.signup_button {
@@ -131,7 +138,12 @@ a.signup_button:hover {
   text-decoration: underline;
 }
 
+section.main {
+  @include round10;
+}
+
 article.entry {
+  @include round10;
   background-color: white;
   padding: 10px;
   margin-bottom: 10px;
@@ -139,7 +151,10 @@ article.entry {
   border-right: 1px solid rgba(0, 0, 0, 0.25);
 
   header {
-    h1 {
+    margin-bottom: 5px;
+
+    h1, h2 {
+      @include round10;
       font-size: 1.8em;
       background: #046AA9 url(<%= image_path "button-overlay-50.png" %>) repeat-x;
       color: white;
@@ -147,20 +162,34 @@ article.entry {
       line-height: 40px;
       border-top: solid 2px rgba(0, 0, 0, 0.25);
       border-left: solid 2px rgba(0, 0, 0, 0.25);
+      margin-bottom: 0;
+
+      a { color: white; }
+      .button {
+        font-size: 15px;
+        line-height: 40px;
+      }
     }
-    p { margin: 0}
-    .meta {
-      float: right;
+    p.climate {
       color: white;
+      position: relative;
+      top: -40px;
+      text-align: right;
       padding: 0 20px;
-      line-height: 40px;
+    }
+    p.meta {
+      margin: 0px;
+      text-align: right;
+      font-size: 80%;
     }
   }
   section.entry-body {
     table {
+      font-size: 80%;
       border-spacing: 3px;
 
       th {
+        @include round5;
         color: white;
         background-color: #03456D;
         text-align: center;
@@ -170,6 +199,10 @@ article.entry {
         color: black;
         border-right: 5px solid lightgray;
         border-bottom: solid 1px lightgray;
+
+        p {
+          margin: 0.3em 0;
+        }
       }
     }
   }

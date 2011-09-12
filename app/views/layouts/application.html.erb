@@ -5,7 +5,7 @@
     <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css'>
     <%= stylesheet_link_tag    "application" %>
-    <%= stylesheet_link_tag    "application", 'media' => 'print' %>
+    <%= stylesheet_link_tag    "application-print", :media => 'print' %>
     <%= javascript_include_tag "application" %>
     <!--[if lt IE 8]>
     <%= stylesheet_link_tag 'application-ie.css' %>
@@ -33,7 +33,7 @@
 	<h2><%= link_to "Your pet diary", root_path %></h2>
       </header>
 
-      <section class="main round">
+      <section class="main">
         <% flash.each do |key, value| %>
 	  <%= content_tag(:div, value, :class => "flash #{key}") %>
         <% end %>
