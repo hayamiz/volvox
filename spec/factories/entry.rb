@@ -1,5 +1,5 @@
 Factory.define :entry do |entry|
-  entry.date		Date.today
+  entry.date		Date.new(2011, 9, 12)
   entry.temperature	23.4
   entry.humidity	50.0
   entry.action_feed	"Gave food a lot"
