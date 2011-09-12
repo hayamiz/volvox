@@ -6,7 +6,6 @@ gem 'rails-i18n'
 gem 'sqlite3', '1.3.4'
 gem 'will_paginate'
 gem 'gravatar_image_tag', '1.0.0'
-gem 'faker', '0.9.5'
 gem 'bluecloth'
 
 # Gems used only for assets and not required
@@ -30,14 +29,18 @@ gem 'therubyracer', '0.9.4'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
-gem 'rspec-rails', '2.6.1'
-gem 'rcov'
 
 group :development do
+  gem 'faker', '0.9.5'
+  gem 'rspec-rails', '2.6.1'
+  gem 'rcov'
   gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
 end
 
 group :test do
+  gem 'faker', '0.9.5'
+  gem 'rspec-rails', '2.6.1'
+  gem 'rcov'
   # Pretty printed test output
   gem 'turn', :require => false
   gem 'webrat', '0.7.3'
