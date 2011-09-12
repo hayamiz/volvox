@@ -256,7 +256,7 @@ describe DiariesController do
           entry = Factory(:entry,
                           :diary => @diary,
                           :date => Factory.next(:date),
-                          :memo => Faker::Lorem.paragraphs(3))
+                          :memo => Faker::Lorem.sentence(50))
           @entries.push(entry)
         end
       end
@@ -264,8 +264,9 @@ describe DiariesController do
       it "should have entries displayed" do
         get :show, :id => @diary
         @entries.each do |entry|
+          entry.memo.should_not be_nil
           response.should have_selector("h2", :content => entry.date.to_s)
-          # response.should have_selector("section", :content => entry.content)
+          response.body.should contain(entry.memo)
         end
       end
 

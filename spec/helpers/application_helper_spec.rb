@@ -9,6 +9,8 @@ describe ApplicationHelper do
     it "should encode markdown text into html" do
       markdown("hello").should include("<p>hello</p>")
       markdown("- hello").should include("<ul>\n<li>hello</li>\n</ul>")
+      sentence = Faker::Lorem.sentence(50)
+      markdown(sentence).should include(sentence)
     end
 
     describe "allowed tags" do

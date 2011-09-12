@@ -16,6 +16,9 @@
       <h2><%= link_to entry.date.to_s, [@diary, entry] %></h2>
       <p class="meta">Updated: <%= entry.updated_at.localtime.strftime("%Y/%m/%d %H:%M:%S") %></p>
     </header>
+    <section class="entry-body">
+      <%=raw markdown(entry.memo) %>
+    </section>
   </article>
 <% end  %>
 
