@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'spork'
-require 'cover_me' if RUBY_VERSION =~ /\A1\.9\./
 
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However, 
@@ -70,31 +69,4 @@ RSpec.configure do |config|
     fill_in :password,	:with => user.password
     click_button
   end
-end
-
-
-CoverMe.config do |c|
-  # where is your project's root:
-  c.project.root = Rails.root
-  # what files are you interested in coverage for:
-  c.file_pattern = [
-    /(#{CoverMe.config.project.root}\/app\/.+\.rb)/i,
-    /(#{CoverMe.config.project.root}\/lib\/.+\.rb)/i
-  ]
-  
-  # what files do you want to explicitly exclude from coverage
-  c.exclude_file_patterns = []
-
-  # where do you want the HTML generated:
-  c.html_formatter.output_path = File.join(CoverMe.config.project.root, 'coverage')
-
-  # what do you want to happen when it finishes:
-#   c.at_exit = Proc.new {
-#     if CoverMe.config.formatter == CoverMe::HtmlFormatter
-#       index = File.join(CoverMe.config.html_formatter.output_path, 'index.html')
-#       if File.exists?(index)
-#         `open #{index}`
-#       end
-#     end
-#   }
 end

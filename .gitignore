@@ -7,4 +7,3 @@ Gemfile.lock
 /bin/*
 /boru.csv
 /coverage/*
-/coverage.data
