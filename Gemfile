@@ -33,14 +33,16 @@ gem 'therubyracer', '0.9.4'
 group :development do
   gem 'faker', '0.9.5'
   gem 'rspec-rails', '2.6.1'
-  gem 'rcov'
+  gem 'rcov' if RUBY_VERSION =~ /\A1\.8\./
+  gem 'cover_me' if RUBY_VERSION =~ /\A1\.9\./
   gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
 end
 
 group :test do
   gem 'faker', '0.9.5'
   gem 'rspec-rails', '2.6.1'
-  gem 'rcov'
+  gem 'rcov' if RUBY_VERSION =~ /\A1\.8\./
+  gem 'cover_me' if RUBY_VERSION =~ /\A1\.9\./
   # Pretty printed test output
   gem 'turn', :require => false
   gem 'webrat', '0.7.3'
