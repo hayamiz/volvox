@@ -225,6 +225,27 @@ describe EntriesController do
           post :create, :diary_id => @diary, :entry => attr
           response.should render_template("entries/new")
         end
+
+        it "should reject empty entry" do
+          lambda do
+            attr = {
+              "date(1i)" => "2011",
+              "date(2i)" => "9",
+              "date(3i)" => "12"
+            }
+            post :create, :diary_id => @diary, :entry => attr
+          end.should_not change(Entry, :count)
+        end
+
+        it "should render new page with empty inputs" do
+          attr = {
+            "date(1i)" => "2011",
+            "date(2i)" => "9",
+            "date(3i)" => "12"
+          }
+          post :create, :diary_id => @diary, :entry => attr
+          response.should render_template("entries/new")
+        end
       end
       
       describe "success" do
@@ -287,7 +308,7 @@ describe EntriesController do
     end
 
     it "should show availability of attributes" do
-      entry = Factory(:empty_entry, :diary => @diary, :date => Factory.next(:date))
+      entry = Factory(:empty_entry, :diary => @diary, :date => Factory.next(:date), :memo => "memo")
       get :show, :diary_id => @diary, :id => entry
       response.should have_selector("section.entry-body", :content => "N/A")
     end

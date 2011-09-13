@@ -2,7 +2,7 @@
 class AttributesExistenceValidator < ActiveModel::Validator
   def validate(record)
     attrs = [:action_feed, :action_care, :pet_feces, :pet_physical, :memo]
-    if attrs.all?{|attr| record[attr].nil? }
+    if attrs.all?{|attr| record[attr].nil? || record[attr].empty? }
       record.errors[:empty] << "One of #{attrs.join(", ")} must be non-empty"
     end
   end
