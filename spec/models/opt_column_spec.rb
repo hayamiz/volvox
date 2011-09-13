@@ -114,6 +114,16 @@ describe OptColumn do
           @diary.opt_columns.create!(@attr)
         end.should change(OptColumn, :count).by(1)
       end
+
+      it "should accept COL_INTEGER" do
+        col = @diary.opt_columns.build(@attr.merge(:col_type => OptColumn::COL_INTEGER))
+        col.should be_valid
+      end
+
+      it "should accept COL_FLOAT" do
+        col = @diary.opt_columns.build(@attr.merge(:col_type => OptColumn::COL_FLOAT))
+        col.should be_valid
+      end
     end
   end
 end
