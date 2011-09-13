@@ -282,8 +282,25 @@ describe DiariesController do
     end
 
     describe "with many entries" do
+      before(:each) do
+        @entries = Array.new
+        31.times do |n|
+          entry = Factory(:entry,
+                          :diary => @diary,
+                          :date => Factory.next(:date),
+                          :memo => Faker::Lorem.sentence(50))
+          @entries.push(entry)
+        end
+      end
+
       it "should have pagination links" do
-        pending "to be implemented"
+        get :show, :id => @diary
+        response.should have_selector("a",
+                                      :href => diary_path(:page => 2),
+                                      :content => "Next")
+        response.should have_selector("a",
+                                      :href => diary_path(:page => 2),
+                                      :content => "2")
       end
     end
   end
