@@ -71,6 +71,38 @@ describe Diary do
       @diary.entries.should == [entry3, entry1, entry2]
     end
   end
+
+  describe "opt_columns association" do
+    before(:each) do
+      @diary = Factory(:diary)
+    end
+
+    it "should respond to opt_columns" do
+      @diary.should respond_to(:opt_columns)
+    end
+
+    it "should be an array of OptColumn instances" do
+      @diary.opt_columns.create!(:name => "Test column 1",
+                                 :col_type => OptColumn::COL_INTEGER)
+      @diary.opt_columns.create!(:name => "Test column 2",
+                                 :col_type => OptColumn::COL_FLOAT)
+      @diary.opt_columns.each do |col|
+        col.is_a?(OptColumn).should be_true
+      end
+    end
+
+    it "should delete columns on diary deletion" do
+      col1 = @diary.opt_columns.create!(:name => "Test column 1",
+                                        :col_type => OptColumn::COL_INTEGER)
+      col2 = @diary.opt_columns.create!(:name => "Test column 2",
+                                        :col_type => OptColumn::COL_FLOAT)
+      col_ids = [col1.id, col2.id]
+      @diary.destroy
+      col_ids.each do |col_id|
+        OptColumn.find_by_id(col_id).should be_nil
+      end
+    end
+  end
 end
 
 # == Schema Information
