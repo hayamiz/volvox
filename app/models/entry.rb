@@ -1,4 +1,13 @@
 
+class AttributesExistenceValidator < ActiveModel::Validator
+  def validate(record)
+    attrs = [:action_feed, :action_care, :pet_feces, :pet_physical, :memo]
+    if attrs.all?{|attr| record[attr].nil? }
+      record.errors[:empty] << "One of #{attrs.join(", ")} must be non-empty"
+    end
+  end
+end
+
 class Entry < ActiveRecord::Base
   attr_accessible :date, :temperature, :humidity,
                   :action_feed, :action_care,
@@ -8,6 +17,7 @@ class Entry < ActiveRecord::Base
 
   validates(:date, :presence => true,
             :uniqueness => {:scope => :diary_id})
+  validates_with(AttributesExistenceValidator)
 end
 # == Schema Information
 #
