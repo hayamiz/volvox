@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe OptColumn do
   describe "types of column" do
-    it "should include INTEGER" do
+    it "should include COL_INTEGER" do
       OptColumn.constants.should include(:COL_INTEGER)
     end
 
-    it "should include FLOAT" do
+    it "should include COL_FLOAT" do
       OptColumn.constants.should include(:COL_FLOAT)
     end
 
