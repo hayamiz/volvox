@@ -35,6 +35,7 @@ group :development do
   gem 'rspec-rails', '2.6.1'
   gem 'rcov'
   gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
+  gem 'rails_best_practices'
 end
 
 group :test do
@@ -52,6 +53,7 @@ group :test do
   gem 'rb-inotify', '0.8.6'
   gem 'rb-fsevent', '0.4.3.1'
   gem 'libnotify', '0.5.7'
+  gem 'rails_best_practices'
 end
 
 gem 'wirble'
