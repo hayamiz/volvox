@@ -3,6 +3,31 @@ require 'spec_helper'
 describe UsersController do
   render_views
 
+  describe "session functions" do
+    before(:each) do
+      @user = Factory(:user)
+    end
+
+    describe "current_user method" do
+      it "should return nil if no one signed in" do
+        controller.current_user.should be_nil
+      end
+    end
+
+    describe "current_user? method" do
+      it "should return true for current user" do
+        test_sign_in(@user)
+        controller.current_user?(@user).should be_true
+      end
+
+      it "should return false for others" do
+        test_sign_in(@user)
+        other = Factory(:user, :email => Factory.next(:email))
+        controller.current_user?(other).should be_false
+      end
+    end
+  end
+
   describe "GET 'new'" do
     it "should have the right title" do
       get :new
@@ -178,6 +203,4 @@ describe UsersController do
       @user.email.should == @attr[:email]
     end
   end
-
-  
 end
