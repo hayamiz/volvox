@@ -457,4 +457,15 @@ describe EntriesController do
       end
     end
   end
+
+  describe "GET 'index'" do
+    before(:each) do
+      @diary = Factory(:diary)
+    end
+
+    it "should redirect to the diary page" do
+      get :index, :diary_id => @diary
+      response.should redirect_to(diary_path(@diary))
+    end
+  end
 end

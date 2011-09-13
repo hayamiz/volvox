@@ -4,6 +4,10 @@ class EntriesController < ApplicationController
   before_filter :author_of_diary, :only => [:new, :edit, :create, :update]
   before_filter :entry_exist, :only => [:edit, :update, :show]
 
+  def index
+    redirect_to diary_path(params[:diary_id])
+  end
+
   def new
     @entry = Entry.new
     @title = "New entry"
