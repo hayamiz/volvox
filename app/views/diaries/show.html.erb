@@ -10,7 +10,9 @@
   <% end  %>
 </header>
 
-<% @diary.entries.each do |entry| %>
+<%= will_paginate @entries %>
+
+<% @entries.each do |entry| %>
   <article class="entry round10">
     <header>
       <h2><%= link_to entry.date.to_s, [@diary, entry] %></h2>
@@ -22,3 +24,4 @@
   </article>
 <% end  %>
 
+<%= will_paginate @entries %>

@@ -41,6 +41,7 @@ class DiariesController < ApplicationController
     @diary = Diary.find_by_id(params[:id])
     if @diary
       @title = @diary.title
+      @entries = @diary.entries.paginate(:page => params[:page])
     else
       not_found
     end

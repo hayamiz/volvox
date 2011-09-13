@@ -279,6 +279,13 @@ describe DiariesController do
           # response.should have_selector("section", :content => entry.content)
         end
       end
+
+      it "should not have pagination links" do
+        get :show, :id => @diary
+        response.should_not have_selector("a",
+                                          :href => diary_path(:page => 2),
+                                          :content => "Next")
+      end
     end
 
     describe "with many entries" do

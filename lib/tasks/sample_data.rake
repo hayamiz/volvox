@@ -10,9 +10,9 @@ namespace :db do
     diary = Diary.create!(:title => "Volvox diary",
                           :desc => "This is a sample diary")
     user.participate(diary)
-    diary.entries.create!(:date => Date.today,
-                          :memo => Faker::Lorem.sentence(100))
-    diary.entries.create!(:date => Date.yesterday,
-                          :memo => Faker::Lorem.sentence(100))
+    61.times do |n|
+      diary.entries.create!(:date => Date.today - n,
+                            :memo => Faker::Lorem.paragraphs(5).join("\n\n"))
+    end
   end
 end
