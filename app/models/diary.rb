@@ -7,6 +7,7 @@ class Diary < ActiveRecord::Base
            :class_name => "Authorship")
   has_many(:authors, :through => :reverse_authorships)
   has_many(:opt_columns, :dependent => :destroy)
+  has_many(:opt_records, :dependent => :destroy)
 
   validates(:title,
             :presence => true,

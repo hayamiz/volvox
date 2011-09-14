@@ -103,6 +103,34 @@ describe Diary do
       end
     end
   end
+
+  describe "opt_records association" do
+    before(:each) do
+      @diary = Factory(:diary)
+    end
+
+    it "should respond to :opt_records" do
+      @diary.should respond_to(:opt_records)
+    end
+
+    it "should be an array of OptRecord" do
+      @diary.opt_records.is_a?(Array).should be_true
+      @diary.opt_records.each do |record|
+        record.is_a?(OptRecord).should be_true
+      end
+    end
+
+    it "should delete records on deletion" do
+      rec1 = @diary.opt_records.create!(:time => Time.now,
+                                        :value => "1")
+      rec2 = @diary.opt_records.create!(:time => Time.now,
+                                        :value => "1")
+      @diary.destroy
+      [rec1, rec2].each do |rec|
+        OptRecord.find_by_id(rec.id).should be_nil
+      end
+    end
+  end
 end
 
 # == Schema Information
