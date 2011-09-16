@@ -6,3 +6,21 @@
     <%= f.submit "Update" %>
   </div>
 <% end  %>
+
+<table>
+  <tr>
+    <% @diary.opt_columns.each do |col|  %>
+      <th><%= col.name %></th>
+    <% end  %>
+  </tr>
+  <tr>
+    <td>bar</td>
+  </tr>
+</table>
+<%= form_for([@diary, @opt_record], :remote => true) do |f| %>
+  <% @diary.opt_columns.each do |col|  %>
+    <% key = ("c"+col.id.to_s).to_sym  %>
+    <%= f.label key, col.name %><br>
+    <%= f.text_field key %>
+  <% end  %>
+<% end  %>

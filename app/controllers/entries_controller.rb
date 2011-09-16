@@ -36,6 +36,7 @@ class EntriesController < ApplicationController
 
   def edit
     @title = "Edit an entry"
+    @opt_record = @diary.opt_records.build
   end
 
   def update
@@ -47,6 +48,7 @@ class EntriesController < ApplicationController
     rescue NoMethodError => err
       logger.error(err)
     end
+    @opt_record = @diary.opt_records.build
     render 'entries/edit'
   end
 
