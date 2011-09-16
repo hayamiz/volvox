@@ -1,0 +1,2 @@
+class OptRecordsController < ApplicationController
+end
