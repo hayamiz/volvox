@@ -64,4 +64,39 @@ describe OptRecord do
       @diary.opt_records.build(@attr.merge(:value => "")).should_not be_valid
     end
   end
+
+  describe "dummy method for dynamic OptColumn" do
+    before(:each) do
+      @diary = Factory(:diary)
+      @entry = Factory(:entry, :diary => @diary)
+      @columns = [Factory(:opt_column, :diary => @diary),
+                  Factory(:opt_column, :name => "Fat", :diary => @diary)]
+      @record = @diary.opt_records.build
+    end
+
+    it "should respond to c* methods" do
+      @columns.each do |col|
+        @record.should respond_to(:c1)
+        @record.should respond_to("c#{col.id}".to_sym)
+      end
+    end
+
+    it "should not respond to non-existing c* methods" do
+      10.times do |n|
+        @record.should_not respond_to("c#{(100000*rand).to_i}".to_sym)
+      end
+    end
+  end
 end
+# == Schema Information
+#
+# Table name: opt_records
+#
+#  id         :integer         not null, primary key
+#  time       :time
+#  value      :string(255)
+#  diary_id   :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+

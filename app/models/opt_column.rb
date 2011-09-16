@@ -24,3 +24,15 @@ class OptColumn < ActiveRecord::Base
     end
   end
 end
+# == Schema Information
+#
+# Table name: opt_columns
+#
+#  id         :integer         not null, primary key
+#  diary_id   :integer
+#  name       :string(255)
+#  col_type   :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
