@@ -1,0 +1,24 @@
+
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      diary: 日記
+      entry: エントリー
+    attributes:
+      user:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード再入力
+      diary:
+        title: タイトル
+      entry:
+        date: 日付
+        temperature: 気温
+        humidity: 湿度
+        action_feed: 餌やり
+        action_care: 世話
+        pet_feces: 糞尿の状態
+        pet_physical: 身体の状態
+        memo: その他メモ

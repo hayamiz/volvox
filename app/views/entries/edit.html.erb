@@ -1,4 +1,4 @@
-<h1>Edit an entry</h1>
+<h1><%= @title %></h1>
 
 <%= form_for([@diary, @entry]) do |f| %>
   <%= render 'fields', :f => f %>
