@@ -13,9 +13,6 @@
       <th><%= col.name %></th>
     <% end  %>
   </tr>
-  <tr>
-    <td>bar</td>
-  </tr>
 </table>
 <%= form_for([@diary, @opt_record], :remote => true) do |f| %>
   <% @diary.opt_columns.each do |col|  %>
