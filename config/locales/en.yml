@@ -2,4 +2,25 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  users:
+    new:
+      title: "Sign up"
+    update:
+      flash:
+        success: "Updated your profile."
+    edit:
+      title: "Setting"
+  entries:
+    new:
+      title: "New entry"
+    create:
+      flash:
+        success: "Successfully created a new entry"
+    edit:
+      title: "Edit an entry"
+    diary_exist:
+      flash:
+        non_exist: "You tried to access a non-existing diary."
+    author_of_diary:
+      flash:
+        non_author: "You are not an author of '%{title}'"

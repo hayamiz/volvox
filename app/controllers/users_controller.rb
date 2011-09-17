@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_filter :correct_user, :only => [:edit, :update]
 
   def new
-    @title = "Sign up"
+    @title = t('users.new.title')
     @user = User.new
   end
 
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @title = "Setting"
+    @title = t'users.edit.title'
   end
 
   def update
@@ -35,10 +35,10 @@ class UsersController < ApplicationController
     end
 
     if @user.update_attributes(params[:user])
-      flash[:success] = "Updated your profile."
+      flash[:success] = t('users.update.flash.success')
       redirect_to @user
     else
-      @title = "Setting"
+      @title = t'users.edit.title'
       render 'edit'
     end
   end

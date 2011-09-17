@@ -10,7 +10,7 @@ class EntriesController < ApplicationController
 
   def new
     @entry = Entry.new
-    @title = "New entry"
+    @title = t"entries.new.title"
   end
 
   def create
@@ -27,7 +27,7 @@ class EntriesController < ApplicationController
     end
 
     if @entry.save
-      flash[:success] = "Successfully created a new entry"
+      flash[:success] = t"entries.create.flash.success"
       redirect_to([@diary, @entry])
     else
       render 'entries/new'
@@ -35,7 +35,7 @@ class EntriesController < ApplicationController
   end
 
   def edit
-    @title = "Edit an entry"
+    @title = t'entries.edit.title'
     @opt_record = @diary.opt_records.build
   end
 
@@ -60,7 +60,7 @@ private
   def diary_exist
     @diary = Diary.find_by_id(params[:diary_id])
     if @diary.nil?
-      flash[:error] = "You tried to access a non-existing diary."
+      flash[:error] = t'entries.diary_exist.flash.non_exist'
       redirect_to root_path
     end
   end
@@ -74,7 +74,7 @@ private
 
   def author_of_diary
     unless current_user.author?(@diary)
-      flash[:error] = "You are not an author of '#{@diary.title}'"
+      flash[:error] = t"entries.author_of_diary.flash.non_author", :title => @diary.title
       redirect_to diary_path(@diary)
     end
   end
