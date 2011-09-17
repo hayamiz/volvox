@@ -1,0 +1,24 @@
+
+ja:
+  users:
+    new:
+      title: "Sign up"
+    update:
+      flash:
+        success: "プロフィールを更新しました"
+    edit:
+      title: "プロフィール設定"
+  entries:
+    new:
+      title: "新しいエントリを書く"
+    create:
+      flash:
+        success: "新しいエントリを作成しました"
+    edit:
+      title: "エントリを編集"
+    diary_exist:
+      flash:
+        non_exist: "存在しない日記にアクセスしようとしました"
+    author_of_diary:
+      flash:
+        non_author: "「%{title}」を編集することができません"
