@@ -3,6 +3,10 @@ require 'spec_helper'
 describe EntriesController do
   render_views
 
+  after(:each) do
+    response.should_not contain("translation missing")
+  end
+
   describe "GET 'new'" do
     before(:each) do
       @diary = Factory(:diary)
