@@ -27,7 +27,7 @@ describe EntriesController do
 
       it "should have flash message" do
         get :new, :diary_id => @diary
-        flash[:failure] =~ /not an author/i
+        flash[:error].should include(t('entries.author_of_diary.flash.non_author', :title => @diary.title))
       end
     end
 
@@ -39,7 +39,7 @@ describe EntriesController do
 
       it "should have the right title" do
         get :new, :diary_id => @diary
-        response.should have_selector("title", :content => "New entry")
+        response.should have_selector("title", :content => t('entries.new.title'))
       end
 
       it "should have form fields" do
@@ -101,7 +101,7 @@ describe EntriesController do
 
       it "should have the right title" do
         get :edit, :diary_id => @diary, :id => @entry
-        response.should have_selector("title", :content => "Edit an entry")
+        response.should have_selector("title", :content => t('entries.edit.title'))
       end
 
       it "should have form fields" do
@@ -162,7 +162,7 @@ describe EntriesController do
       
       it "should have flash message" do
         post :create, :diary_id => @diary, :entry => @attr
-        flash[:failure] =~ /not an author/i
+        flash[:error].should include(t('entries.author_of_diary.flash.non_author', :title => @diary.title))
       end
     end
     
@@ -262,7 +262,7 @@ describe EntriesController do
         
         it "should have flash message" do
           post :create, :diary_id => @diary, :entry => @attr
-          flash[:success].should =~ /created/
+          flash[:success].should include(t('entries.create.flash.success'))
         end
       end
     end
@@ -398,7 +398,7 @@ describe EntriesController do
 
       it "should have error flash message" do
         put :update, :diary_id => @diary, :id => @entry, :entry => @attr
-        flash[:error].should =~ /not an author/i
+        flash[:error].should include(t('entries.author_of_diary.flash.non_author', :title => @diary.title))
       end
     end
 
@@ -425,7 +425,7 @@ describe EntriesController do
         
         it "should should have flash message" do
           put :update, :diary_id => @diary, :id => @entry, :entry => @attr
-          flash[:success] =~ /entry updated/
+          flash[:success].should include(t('entries.update.flash.success'))
         end
       end
       

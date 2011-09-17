@@ -31,7 +31,7 @@ describe UsersController do
   describe "GET 'new'" do
     it "should have the right title" do
       get :new
-      response.should have_selector("title", :content => "Sign up")
+      response.should have_selector("title", :content => t('users.new.title'))
     end
 
     it "should have required fields" do
@@ -149,7 +149,7 @@ describe UsersController do
     describe "for authorized users" do
       it "should have the right title" do
         get :edit, :id => @user
-        response.should have_selector("title", :content => "Setting")
+        response.should have_selector("title", :content => t('users.edit.title'))
       end
 
       it "should have required fields" do

@@ -42,6 +42,7 @@ class EntriesController < ApplicationController
   def update
     begin
       if @entry.update_attributes(params[:entry])
+        flash[:success] = t'entries.update.flash.success'
         redirect_to([@diary, @entry])
         return
       end

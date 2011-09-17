@@ -16,6 +16,9 @@ en:
     create:
       flash:
         success: "Successfully created a new entry"
+    update:
+      flash:
+        success: "Entry updated"
     edit:
       title: "Edit an entry"
     diary_exist:

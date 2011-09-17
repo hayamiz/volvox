@@ -69,4 +69,8 @@ RSpec.configure do |config|
     fill_in :password,	:with => user.password
     click_button
   end
+
+  def t(*args)
+    I18n.translate(*args)
+  end
 end
