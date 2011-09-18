@@ -2,28 +2,49 @@ require 'spec_helper'
 
 describe OptColumn do
   describe "types of column" do
-    it "should include COL_INTEGER" do
-      OptColumn.constants.should include(:COL_INTEGER)
+    it "should have add_col_type method" do
+      OptColumn.should respond_to(:add_col_type)
     end
 
-    it "should include COL_FLOAT" do
-      OptColumn.constants.should include(:COL_FLOAT)
+    it "should add a column type" do
+      OptColumn.constants.should_not include(:COL_HOGE)
+      OptColumn.add_col_type(:COL_HOGE, 1)
+      OptColumn.constants.should include(:COL_HOGE)
+      OptColumn.instance_eval("remove_const(:COL_HOGE); @col_types.pop")
     end
 
-    describe "management of column types" do
-      describe "col_name class method" do
-        it "should respond to :col_type_name" do
-          OptColumn.should respond_to(:col_type_name)
-        end
+    it "should have col_types" do
+      OptColumn.should respond_to(:col_types)
+    end
 
-        it "should return column name" do
-          OptColumn.col_type_name(OptColumn::COL_INTEGER).should == "COL_INTEGER"
-          OptColumn.col_type_name(OptColumn::COL_FLOAT).should == "COL_FLOAT"
-        end
+    it "should list all column types by col_types method" do
+      OptColumn.col_types.should == [[:COL_INTEGER, 1], [:COL_FLOAT, 2]]
+    end
 
-        it "should return nil for unknown types" do
-          OptColumn.col_type_name(0).should be_nil
-          OptColumn.col_type_name(100).should be_nil
+    describe "with int and float" do
+      it "should include COL_INTEGER" do
+        OptColumn.constants.should include(:COL_INTEGER)
+      end
+
+      it "should include COL_FLOAT" do
+        OptColumn.constants.should include(:COL_FLOAT)
+      end
+
+      describe "management of column types" do
+        describe "col_name class method" do
+          it "should respond to :col_type_name" do
+            OptColumn.should respond_to(:col_type_name)
+          end
+
+          it "should return column name" do
+            OptColumn.col_type_name(OptColumn::COL_INTEGER).should == "COL_INTEGER"
+            OptColumn.col_type_name(OptColumn::COL_FLOAT).should == "COL_FLOAT"
+          end
+
+          it "should return nil for unknown types" do
+            OptColumn.col_type_name(0).should be_nil
+            OptColumn.col_type_name(100).should be_nil
+          end
         end
       end
     end
