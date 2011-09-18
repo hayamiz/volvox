@@ -65,8 +65,8 @@ RSpec.configure do |config|
 
   def integration_sign_in(user)
     visit signin_path
-    fill_in :email,	:with => user.email
-    fill_in :password,	:with => user.password
+    fill_in t('activerecord.attributes.user.email'),	:with => user.email
+    fill_in t('activerecord.attributes.user.password'),	:with => user.password
     click_button
   end
 
