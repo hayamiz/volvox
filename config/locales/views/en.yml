@@ -19,6 +19,7 @@ en:
       title: "Create a new diary"
     edit:
       title: "Edit the diary"
+      submit: "Update"
   entries:
     new:
       title: "New entry"

@@ -1,8 +1,21 @@
-<h1>Edit the diary</h1>
+<h1><%= t'diaries.edit.title' %></h1>
 
 <%= form_for(@diary) do |f| %>
   <%= render 'fields', :f => f %>
   <div class="actions">
-    <%= f.submit "Update" %>
+    <%= f.submit t('.submit') %>
   </div>
 <% end  %>
+
+<%= form_for([@diary, @opt_column]) do |f| %>
+  <div>
+    <div class="field">
+      <%= f.label :name %><br />
+      <%= f.text_field :name %>
+    </div>
+    <div>
+      <%= f.label :col_type %><br />
+      <%= f.select :col_type, [["Integer", OptColumn::COL_INTEGER], ["Float", OptColumn::COL_FLOAT]] %>
+    </div>
+  </div>
+<% end %>

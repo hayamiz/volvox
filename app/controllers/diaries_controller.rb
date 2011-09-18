@@ -26,6 +26,7 @@ class DiariesController < ApplicationController
 
   def edit
     @title = "Edit the diary"
+    @opt_column = @diary.opt_columns.build
   end
 
   def update
@@ -33,6 +34,7 @@ class DiariesController < ApplicationController
       flash[:success] = "Updated the diary settings successfully"
       redirect_to @diary
     else
+      @opt_column = @diary.opt_columns.build
       render "diaries/edit"
     end
   end

@@ -312,6 +312,21 @@ describe DiariesController do
     end
   end
 
+  describe "opt_columns editor on edit page" do
+    before(:each) do
+      @user = test_sign_in(Factory(:user))
+      @diary = Factory(:diary)
+      @user.participate(@diary)
+    end
+
+    it "should have form to add new OptColumns" do
+      get :edit, :id => @diary
+      response.should have_selector("form[action='#{diary_opt_columns_path(@diary)}']")
+      response.should have_selector("input[type='text'][name='opt_column[name]']")
+      response.should have_selector("select[name='opt_column[col_type]']")
+    end
+  end
+
   it "should have deletion" do
     pending "deletion"
   end
