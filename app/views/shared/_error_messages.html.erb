@@ -1,7 +1,6 @@
 <% if object.errors.any? %>
   <div id="error_explanation">
-    <h2><%= pluralize(object.errors.count, "error") %> 
-        prohibited this user from being saved:</h2>
+    <h2><%= t('activerecord.errors.template.header', :model => object.class.model_name.human, :count => object.errors.count) %></h2>
     <p><%= t('activerecord.errors.template.body') %></p>
     <ul>
     <% object.errors.full_messages.each do |msg| %>

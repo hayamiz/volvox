@@ -5,11 +5,20 @@ en:
   users:
     new:
       title: "Sign up"
+      submit: "Sign up"
     update:
       flash:
         success: "Updated your profile."
     edit:
       title: "Setting"
+  sessions:
+    new:
+      title: "Sign in"
+  diaries:
+    new:
+      title: "Create a new diary"
+    edit:
+      title: "Edit the diary"
   entries:
     new:
       title: "New entry"

@@ -1,0 +1,11 @@
+
+en:
+  activerecord:
+    attributes:
+      diary:
+        desc: Description
+      entry:
+        action_feed: Feed
+        action_care: Care
+        pet_feces: Feces
+        pet_physical: Physical condition

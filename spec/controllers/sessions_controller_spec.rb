@@ -6,7 +6,7 @@ describe SessionsController do
   describe "GET 'new'" do
     it "should have the right title" do
       get :new
-      response.should have_selector("title", :content => "Sign in")
+      response.should have_selector("title", :content => t('sessions.new.title'))
     end
 
     it "should have fields" do

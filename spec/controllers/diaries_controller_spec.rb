@@ -18,7 +18,7 @@ describe DiariesController do
 
       it "should have the right title" do
         get :new
-        response.should have_selector("title", :content => "Create a new diary")
+        response.should have_selector("title", :content => t('diaries.new.title'))
       end
 
       it "should have form fields" do
@@ -119,7 +119,7 @@ describe DiariesController do
 
       it "should have the right title" do
         get :edit, :id => @diary
-        response.should have_selector("title", :content => "Edit the diary")
+        response.should have_selector("title", :content => t('diaries.edit.title'))
       end
 
       it "should have form fields" do

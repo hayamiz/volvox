@@ -13,6 +13,7 @@ ja:
         password_confirmation: パスワード再入力
       diary:
         title: タイトル
+        desc: 説明
       entry:
         date: 日付
         temperature: 気温
