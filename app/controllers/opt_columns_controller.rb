@@ -1,0 +1,2 @@
+class OptColumnsController < ApplicationController
+end

@@ -4,6 +4,7 @@ Volvox::Application.routes.draw do
   resources :sessions, :only => [:new, :create, :destroy]
   resources :diaries do
     resources :entries
+    resources :opt_columns
     resources :opt_records
   end
 
