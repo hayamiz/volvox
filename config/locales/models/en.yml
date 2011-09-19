@@ -1,5 +1,9 @@
 
 en:
+  opt_column:
+    types:
+      integer: "Integer"
+      float: "float"
   activerecord:
     attributes:
       diary:

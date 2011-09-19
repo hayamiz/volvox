@@ -329,6 +329,23 @@ describe DiariesController do
       response.should have_selector("input[type='text'][name='opt_column[name]']")
       response.should have_selector("select[name='opt_column[col_type]']")
     end
+
+    describe "diary with some opt_columns" do
+      before(:each) do
+        @columns = []
+        (1..5).each do |n|
+          @diary.opt_columns.create!(:name => "Column no.#{n}",
+                                     :col_type => OptColumn::COL_INTEGER)
+        end
+      end
+
+      it "should list existing columns in edit page" do
+        get :edit, :id => @diary
+        @columns.each do |col|
+          response.should contain(col.name)
+        end
+      end
+    end
   end
 
   it "should have deletion" do

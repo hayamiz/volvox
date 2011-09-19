@@ -7,6 +7,21 @@
   </div>
 <% end  %>
 
+<hr />
+
+<table>
+  <tr>
+    <th>Column name</th>
+    <th>Column type</th>
+  </tr>
+  <% @opt_columns.each do |col|  %>
+    <tr>
+      <td><%= col.name %></td>
+      <td><%= OptColumn.col_type_name(col.col_type) %></td>
+    </tr>
+  <% end  %>
+</table>
+
 <%= form_for([@diary, @opt_column]) do |f| %>
   <div>
     <div class="field">
