@@ -1,4 +1,6 @@
 class EntriesController < ApplicationController
+  include DiariesChildrenHelper
+
   before_filter :authenticate, :only => [:new, :edit, :create, :update]
   before_filter :diary_exist
   before_filter :author_of_diary, :only => [:new, :edit, :create, :update]
@@ -58,25 +60,10 @@ class EntriesController < ApplicationController
   end
 
 private
-  def diary_exist
-    @diary = Diary.find_by_id(params[:diary_id])
-    if @diary.nil?
-      flash[:error] = t'entries.diary_exist.flash.non_exist'
-      redirect_to root_path
-    end
-  end
-
   def entry_exist
     @entry = Entry.find_by_id(params[:id])
     if @entry.nil?
       not_found
-    end
-  end
-
-  def author_of_diary
-    unless current_user.author?(@diary)
-      flash[:error] = t"entries.author_of_diary.flash.non_author", :title => @diary.title
-      redirect_to diary_path(@diary)
     end
   end
 end
