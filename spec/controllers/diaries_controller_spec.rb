@@ -3,6 +3,10 @@ require 'spec_helper'
 describe DiariesController do
   render_views
 
+  after(:each) do
+    response.should_not contain("translation missing")
+  end
+
   describe "GET 'new'" do
     describe "for non-signed-in users" do
       it "should redirect to sign in form" do
