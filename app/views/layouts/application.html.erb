@@ -44,6 +44,9 @@
       <section class="console">
         <%= debug(params) %>
         <%= debug(session) %>
+        <% if ! @debug_objs.nil? %>
+	  <%= @debug_objs.each{|obj| debug(obj)} %>
+	<% end %>
       </section>
       <% end %>
     </div>
