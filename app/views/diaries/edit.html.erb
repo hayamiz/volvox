@@ -32,5 +32,8 @@
       <%= f.label :col_type %><br />
       <%= f.select :col_type, [["Integer", OptColumn::COL_INTEGER], ["Float", OptColumn::COL_FLOAT]] %>
     </div>
+    <div class="actions">
+      <%= f.submit "Add column" %>
+    </div>
   </div>
 <% end %>

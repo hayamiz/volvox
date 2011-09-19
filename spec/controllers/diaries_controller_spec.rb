@@ -328,6 +328,7 @@ describe DiariesController do
       response.should have_selector("form[action='#{diary_opt_columns_path(@diary)}']")
       response.should have_selector("input[type='text'][name='opt_column[name]']")
       response.should have_selector("select[name='opt_column[col_type]']")
+      response.should have_selector("form[action='#{diary_opt_columns_path(@diary)}'] input[type='submit']")
     end
 
     describe "diary with some opt_columns" do
