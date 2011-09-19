@@ -4,9 +4,9 @@ class OptColumn < ActiveRecord::Base
     def col_type_name(num)
       case num
       when COL_INTEGER
-        "COL_INTEGER"
+        I18n.translate("opt_column.types.integer")
       when COL_FLOAT
-        "COL_FLOAT"
+        I18n.translate("opt_column.types.float")
       else
         nil
       end
@@ -33,6 +33,7 @@ class OptColumn < ActiveRecord::Base
 
   validates(:name, :presence => true)
   validates(:col_type,
+            :presence => true,
             :inclusion => { :in => 1..2})
 
   # column types

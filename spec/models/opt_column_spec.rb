@@ -37,8 +37,8 @@ describe OptColumn do
           end
 
           it "should return column name" do
-            OptColumn.col_type_name(OptColumn::COL_INTEGER).should == "COL_INTEGER"
-            OptColumn.col_type_name(OptColumn::COL_FLOAT).should == "COL_FLOAT"
+            OptColumn.col_type_name(OptColumn::COL_INTEGER).should == t("opt_column.types.integer")
+            OptColumn.col_type_name(OptColumn::COL_FLOAT).should == t("opt_column.types.float")
           end
 
           it "should return nil for unknown types" do
@@ -112,6 +112,11 @@ describe OptColumn do
       it "should not accept an empty name" do
         col = @diary.opt_columns.build(:name => "",
                                        :col_type => OptColumn::COL_INTEGER)
+        col.should_not be_valid
+      end
+
+      it "should require col_type" do
+        col = @diary.opt_columns.build(:name => "hoge")
         col.should_not be_valid
       end
 
