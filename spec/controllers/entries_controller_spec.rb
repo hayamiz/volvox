@@ -472,29 +472,4 @@ describe EntriesController do
       response.should redirect_to(diary_path(@diary))
     end
   end
-
-  describe "a form for OptRecords" do
-    before(:each) do
-      @user = test_sign_in(Factory(:user))
-      @diary = Factory(:diary)
-      @user.participate(@diary)
-      @entry = Factory(:entry, :diary => @diary)
-      @columns = [Factory(:opt_column, :diary => @diary),
-                  Factory(:opt_column, :name => "Fat", :diary => @diary)]
-    end
-
-    it "should have a form" do
-      get :edit, :diary_id => @entry, :id => @entry
-      @columns.each do |col|
-        response.should have_selector("input[name='opt_record[c#{col.id}]']")
-      end
-    end
-
-    it "should have a table with OptColumn" do
-      get :edit, :diary_id => @entry, :id => @entry
-      @columns.each do |col|
-        response.should have_selector("th", :content => col.name)
-      end
-    end
-  end
 end
