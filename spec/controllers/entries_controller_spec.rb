@@ -306,9 +306,8 @@ describe EntriesController do
       response.body.should include(BlueCloth.new(@entry.pet_physical).to_html)
       response.body.should include(BlueCloth.new(@entry.memo).to_html)
 
-      pending ""
-      response.should contain(@entry.temperature)
-      response.should contain(@entry.humidity)
+      response.should contain(@entry.temperature.to_s)
+      response.should contain(@entry.humidity.to_s + "%")
     end
 
     it "should show availability of attributes" do
