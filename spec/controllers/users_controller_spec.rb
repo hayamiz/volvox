@@ -126,8 +126,21 @@ describe UsersController do
       end
 
       describe "with many diaries" do
+        before(:each) do
+          @diaries = []
+          50.times do |n|
+            diary = Factory(:diary,
+                            :title => "Diary #{n.ordinalize}",
+                            :desc => Faker::Lorem.sentence(10))
+            @user.participate(diary)
+            @diaries.push(diary)
+          end
+        end
+        
         it "should page pagination links" do
-          pending "to be implemented"
+          response.should_not have_selector("a",
+                                            :href => user_path(@user, :page => 2),
+                                            :content => "Next")
         end
       end
     end

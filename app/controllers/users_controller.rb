@@ -19,7 +19,11 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by_id(params[:id])
-    not_found unless @user
+    if @user.nil?
+      not_found
+      return
+    end
+    @diaries = @user.diaries.paginate(:page => params[:page])
   end
 
   def edit

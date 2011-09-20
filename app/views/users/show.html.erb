@@ -3,6 +3,7 @@
   <%= @user.name %>
 </h1>
 
+<%= will_paginate @diaries %>
 <ul class="diary-list">
   <% @user.diaries.each do |diary| %>
     <li><%= link_to diary.title, diary_path(diary) %></li>
