@@ -44,12 +44,12 @@ class OptRecord < ActiveRecord::Base
   def method_missing(name, *args)
     if /\A(c(\d+))(=?)\Z/ =~ name.to_s
       col = OptColumn.find_by_id($~[2].to_i)
-      super unless col
+      return super unless col
       key = $~[1].to_sym
       if $~[3] == "="
-        col
+        self.value[key] = args[0]
       else
-        col
+        self.value[key]
       end
     else
       super

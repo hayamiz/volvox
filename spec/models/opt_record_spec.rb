@@ -117,19 +117,34 @@ describe OptRecord do
     end
   end
 
-  describe "dummy method for dynamic OptColumn" do
+  describe "virtual method for dynamic OptColumn" do
     before(:each) do
       @diary = Factory(:diary)
       @entry = Factory(:entry, :diary => @diary)
-      @columns = [Factory(:opt_column, :diary => @diary),
-                  Factory(:opt_column, :name => "Fat", :diary => @diary)]
-      @record = @diary.opt_records.build
+      @col1 = Factory(:opt_column, :diary => @diary)
+      @col2 = Factory(:opt_column, :name => "Fat", :diary => @diary)
+      @record = @diary.opt_records.build(:time => Time.now,
+                                         :value => {
+                                           @col1.ckey => 1.0,
+                                           @col2.ckey => 2.0
+                                         })
     end
 
     it "should respond to 'column key' methods" do
-      @columns.each do |col|
+      [@col1, @col2].each do |col|
         @record.should respond_to(col.ckey)
       end
+    end
+
+    it "should return right values" do
+      @record.send(@col1.ckey).should == 1.0
+      @record.send(@col2.ckey).should == 2.0
+    end
+
+    it "should update :value attribute" do
+      @record.send(@col1.ckey.to_s+"=", 3.0)
+      @record.send(@col1.ckey).should == 3.0
+      @record.value.should == { @col1.ckey => 3.0, @col2.ckey => 2.0 }
     end
   end
 end
