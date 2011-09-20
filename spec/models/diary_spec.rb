@@ -107,6 +107,12 @@ describe Diary do
   describe "opt_records association" do
     before(:each) do
       @diary = Factory(:diary)
+      @col1 = @diary.opt_columns.create!(:name => "test1", :col_type => OptColumn::COL_INTEGER)
+      @col2 = @diary.opt_columns.create!(:name => "test2", :col_type => OptColumn::COL_INTEGER)
+      @rec1 = @diary.opt_records.create!(:time => Time.now,
+                                         :value => {@col1.ckey => 1})
+      @rec2 = @diary.opt_records.create!(:time => Time.now,
+                                         :value => {@col2.ckey => 2})
     end
 
     it "should respond to :opt_records" do
@@ -121,12 +127,8 @@ describe Diary do
     end
 
     it "should delete records on deletion" do
-      rec1 = @diary.opt_records.create!(:time => Time.now,
-                                        :value => "1")
-      rec2 = @diary.opt_records.create!(:time => Time.now,
-                                        :value => "1")
       @diary.destroy
-      [rec1, rec2].each do |rec|
+      [@rec1, @rec2].each do |rec|
         OptRecord.find_by_id(rec.id).should be_nil
       end
     end
