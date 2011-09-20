@@ -434,7 +434,11 @@ describe EntriesController do
       
       describe "failure" do
         before(:each) do
-          @attr = @attr.merge("date(1i)" => nil)
+          @attr = @attr.merge(:memo => "",
+                              :action_feed => "",
+                              :action_care => "",
+                              :pet_feces => "",
+                              :pet_physical => "")
         end
         
         it "should fail with invalid data" do
@@ -443,17 +447,14 @@ describe EntriesController do
           @entry.date.year.should_not == 2012
           @entry.date.month.should_not == 10
           @entry.date.day.should_not == 13
-          @entry.memo.should_not == @attr[:memo]
         end
-        
+
         it "should render edit page" do
           put :update, :diary_id => @diary, :id => @entry, :entry => @attr
           response.should render_template("entries/edit")
-          response.should have_selector("input[type='text'][name='entry[temperature]']")
         end
 
         it "should have error messages" do
-          pending ""
           put :update, :diary_id => @diary, :id => @entry, :entry => @attr
           response.should have_selector("div#error_explanation")
         end
