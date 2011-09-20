@@ -45,14 +45,24 @@ describe OptRecord do
   describe "validation" do
     before(:each) do
       @diary = Factory(:diary)
+      @column1 = @diary.opt_columns.create!(:name => "Test column 1",
+                                            :col_type => OptColumn::COL_INTEGER)
+      @column2 = @diary.opt_columns.create!(:name => "Test column 2",
+                                            :col_type => OptColumn::COL_FLOAT)
       @attr = {
         :time => Time.at(0),
-        :value => Marshal.dump(:foo => 10, :bar => "a")
+        :value => {@column1.ckey => 10, @column2.ckey => 1.0}
       }
     end
 
-    it "should create an instance" do
-      @diary.opt_records.create!(@attr)
+    it "should create an instance with valid value" do
+      lambda do
+        @diary.opt_records.create!(@attr)
+      end.should change(OptRecord, :count).by(1)
+    end
+
+    it "should allow valid input" do
+      @diary.opt_records.build(@attr).should be_valid
     end
 
     it "should require time" do
@@ -62,6 +72,48 @@ describe OptRecord do
     it "should require value" do
       @diary.opt_records.build(@attr.merge(:value => nil)).should_not be_valid
       @diary.opt_records.build(@attr.merge(:value => "")).should_not be_valid
+    end
+
+    it "should require Hash as :value attribute" do
+      @diary.opt_records.build(@attr.merge(:value => 1)).should_not be_valid
+      @diary.opt_records.build(@attr.merge(:value => "foo")).should_not be_valid
+      @diary.opt_records.build(@attr.merge(:value => [1,2,3])).should_not be_valid
+      @diary.opt_records.build(@attr.merge(:value => {})).should_not be_valid
+    end
+
+    it "should allow only existing column as hash keys of :value attribute" do
+      @diary.opt_records.build(@attr.merge(:value => {:foo => "bar"})).should_not be_valid
+    end
+
+    it "should check types of each value in :value attribute" do
+      @diary.opt_records.build(@attr.merge(:value => {@column1.ckey => "foo"})).should_not be_valid
+    end
+  end
+
+  describe "value method" do
+    before(:each) do
+      @diary = Factory(:diary)
+      @column1 = @diary.opt_columns.create!(:name => "Test column 1",
+                                            :col_type => OptColumn::COL_INTEGER)
+      @column2 = @diary.opt_columns.create!(:name => "Test column 2",
+                                            :col_type => OptColumn::COL_FLOAT)
+      @column3 = @diary.opt_columns.create!(:name => "Test column 3",
+                                            :col_type => OptColumn::COL_STRING)
+      @value = {
+        @column1.ckey => 10,
+        @column2.ckey => 1.0,
+        @column3.ckey => "hello world"
+      }
+      @record = @diary.opt_records.create!(:time => Time.at(0),
+                                           :value => @value)
+    end
+
+    it "should respond to :value" do
+      @record.should respond_to(:value)
+    end
+
+    it "should return the right value" do
+      @record.value.should == @value
     end
   end
 
@@ -74,16 +126,9 @@ describe OptRecord do
       @record = @diary.opt_records.build
     end
 
-    it "should respond to c* methods" do
+    it "should respond to 'column key' methods" do
       @columns.each do |col|
-        @record.should respond_to(:c1)
-        @record.should respond_to("c#{col.id}".to_sym)
-      end
-    end
-
-    it "should not respond to non-existing c* methods" do
-      10.times do |n|
-        @record.should_not respond_to("c#{(100000*rand).to_i}".to_sym)
+        @record.should respond_to(col.ckey)
       end
     end
   end
