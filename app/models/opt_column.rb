@@ -7,6 +7,8 @@ class OptColumn < ActiveRecord::Base
         I18n.translate("opt_column.types.integer")
       when COL_FLOAT
         I18n.translate("opt_column.types.float")
+      when COL_STRING
+        I18n.translate("opt_column.types.string")
       else
         nil
       end
@@ -34,11 +36,12 @@ class OptColumn < ActiveRecord::Base
   validates(:name, :presence => true)
   validates(:col_type,
             :presence => true,
-            :inclusion => { :in => 1..2})
+            :inclusion => { :in => 1..3})
 
   # column types
   add_col_type :COL_INTEGER,	1
   add_col_type :COL_FLOAT, 	2
+  add_col_type :COL_STRING, 	3
 
   def ckey
     "c#{self.id}".to_sym

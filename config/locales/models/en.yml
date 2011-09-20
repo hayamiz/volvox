@@ -3,7 +3,8 @@ en:
   opt_column:
     types:
       integer: "Integer"
-      float: "float"
+      float: "Float"
+      string: "String"
   activerecord:
     attributes:
       diary:
