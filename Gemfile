@@ -32,8 +32,7 @@ gem 'therubyracer', '0.9.4'
 
 group :development do
   gem 'faker', '0.9.5'
-  gem 'rspec-rails', '2.6.1'
-  gem 'rcov'
+  gem 'rspec-rails', '2.6.1' 
   gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
   gem 'rails_best_practices'
 end
@@ -41,7 +40,7 @@ end
 group :test do
   gem 'faker', '0.9.5'
   gem 'rspec-rails', '2.6.1'
-  gem 'rcov'
+  gem 'simplecov', :require => false
   # Pretty printed test output
   gem 'turn', :require => false
   gem 'webrat', '0.7.3'
