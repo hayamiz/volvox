@@ -39,6 +39,10 @@ class OptColumn < ActiveRecord::Base
   # column types
   add_col_type :COL_INTEGER,	1
   add_col_type :COL_FLOAT, 	2
+
+  def ckey
+    "c#{self.id}".to_sym
+  end
 end
 # == Schema Information
 #

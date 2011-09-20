@@ -79,6 +79,21 @@ describe OptColumn do
     end
   end
 
+  describe "ckey method" do
+    before(:each) do
+      @diary = Factory(:diary)
+      @col = Factory(:opt_column, :diary => @diary)
+    end
+
+    it "should respond to ckey" do
+      @col.should respond_to(:ckey)
+    end
+
+    it "should return symbol to be used as attribute key in OptRecord#value" do
+      @col.ckey.should == "c#{@col.id}".to_sym
+    end
+  end
+
   describe "diary association" do
     before(:each) do
       @user = Factory(:user)
