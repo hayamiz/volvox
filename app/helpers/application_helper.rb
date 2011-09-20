@@ -22,4 +22,11 @@ module ApplicationHelper
                                      'br'],
                            :attributes => ['id', 'class', 'style'])).to_html
   end
+
+  def add_debug(obj)
+    if Rails.env.development?
+      @debug_objs ||= []
+      @debug_objs.push(obj)
+    end
+  end
 end
