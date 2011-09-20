@@ -1,5 +1,7 @@
 
 class DiariesController < ApplicationController
+  include ApplicationHelper
+
   before_filter(:authenticate,
                 :only => [:new, :create, :edit, :update])
   before_filter(:author,
