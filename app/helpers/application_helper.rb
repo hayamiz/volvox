@@ -24,7 +24,7 @@ module ApplicationHelper
   end
 
   def add_debug(obj)
-    if Rails.env.development?
+    if Rails.env.development? || Rails.env.test?
       @debug_objs ||= []
       @debug_objs.push(obj)
     end

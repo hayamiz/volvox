@@ -38,4 +38,12 @@ describe ApplicationHelper do
       end
     end
   end
+
+  describe "add_debug method" do
+    it "should add objs to be debug-printed" do
+      helper.instance_eval("@debug_objs").should == nil
+      helper.add_debug(:hello)
+      helper.instance_eval("@debug_objs").should_not == nil
+    end
+  end
 end
