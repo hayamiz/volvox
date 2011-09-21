@@ -358,4 +358,8 @@ describe DiariesController do
   it "should have deletion" do
     pending "deletion"
   end
+
+  it "should have UI for user participation" do
+    pending "consider UI"
+  end
 end
