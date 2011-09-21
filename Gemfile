@@ -53,6 +53,7 @@ group :test do
   gem 'rb-fsevent', '0.4.3.1'
   gem 'libnotify', '0.5.7'
   gem 'rails_best_practices'
+  gem 'nokogiri'
 end
 
 gem 'wirble'

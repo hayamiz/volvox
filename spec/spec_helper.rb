@@ -76,4 +76,8 @@ RSpec.configure do |config|
   def t(*args)
     I18n.translate(*args)
   end
+
+  def response_xpath(xpath)
+    Nokogiri.parse(response.body).search(xpath)
+  end
 end
