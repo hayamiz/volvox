@@ -64,6 +64,14 @@ class OptRecord < ActiveRecord::Base
     end
     super
   end
+
+  def value
+    if self[:value].is_a? String
+      YAML.load(self[:value])
+    else
+      self[:value]
+    end
+  end
 end
 # == Schema Information
 #

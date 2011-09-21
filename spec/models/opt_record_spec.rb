@@ -106,6 +106,7 @@ describe OptRecord do
       }
       @record = @diary.opt_records.create!(:time => Time.at(0),
                                            :value => @value)
+      @record.reload
     end
 
     it "should respond to :value" do
@@ -114,6 +115,7 @@ describe OptRecord do
 
     it "should return the right value" do
       @record.value.should == @value
+      @record.value[@column1.ckey].should == @value[@column1.ckey]
     end
   end
 
