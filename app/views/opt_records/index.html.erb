@@ -8,7 +8,7 @@
   </tr>
   <% @opt_records.each do |rec| %>
     <tr>
-      <td><%= rec.time %></td>
+      <td><%= l(rec.time, :format => :short) %></td>
       <% @opt_columns.each do |col| %>
 	<td><%= rec.value[col.ckey] || "-" %></td>
       <% end %>
