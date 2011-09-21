@@ -274,6 +274,11 @@ describe DiariesController do
         end
       end
 
+      it "should display the right number of entries" do
+        get :show, :id => @diary
+        response_xpath("//article").size.should == 5
+      end
+
       it "should have links to entries" do
         get :show, :id => @diary
         @entries.each do |entry|
@@ -312,6 +317,7 @@ describe DiariesController do
         response.should have_selector("a",
                                       :href => diary_path(:page => 2),
                                       :content => "2")
+        response_xpath("//article").size.should == 30
       end
     end
   end
