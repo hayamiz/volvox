@@ -20,11 +20,13 @@ gem 'jquery-rails', '1.0.13'
 gem 'execjs', '1.2.4'
 gem 'therubyracer', '0.9.4'
 
+gem 'thin', :require => false
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano'
+gem 'capistrano'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
