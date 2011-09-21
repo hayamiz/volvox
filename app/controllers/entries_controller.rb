@@ -42,14 +42,10 @@ class EntriesController < ApplicationController
   end
 
   def update
-    begin
-      if @entry.update_attributes(params[:entry])
-        flash[:success] = t'entries.update.flash.success'
-        redirect_to([@diary, @entry])
-        return
-      end
-    rescue NoMethodError => err
-      logger.error(err)
+    if @entry.update_attributes(params[:entry])
+      flash[:success] = t'entries.update.flash.success'
+      redirect_to([@diary, @entry])
+      return
     end
     @opt_record = @diary.opt_records.build
     render 'entries/edit'
