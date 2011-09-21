@@ -125,6 +125,8 @@ describe OptRecord do
       @entry = Factory(:entry, :diary => @diary)
       @col1 = Factory(:opt_column, :diary => @diary)
       @col2 = Factory(:opt_column, :name => "Fat", :diary => @diary)
+      @col3 = Factory(:opt_column, :name => "body",
+                      :diary => Factory(:diary, :title => "Yet Another Diary"))
       @record = @diary.opt_records.build(:time => Time.now,
                                          :value => {
                                            @col1.ckey => 1.0,
@@ -147,6 +149,18 @@ describe OptRecord do
       @record.send(@col1.ckey.to_s+"=", 3.0)
       @record.send(@col1.ckey).should == 3.0
       @record.value.should == { @col1.ckey => 3.0, @col2.ckey => 2.0 }
+    end
+
+    it "should raise NoMethodError for unknown column" do
+      lambda do
+        @record.send(@col3.ckey)
+      end.should raise_error
+    end
+
+    it "should raise errors for other non-existing methods" do
+      lambda do
+        @record.hogehogepiyopiyo
+      end.should raise_error
     end
   end
 end

@@ -23,7 +23,7 @@ class ColumnExistenceValidator < ActiveModel::Validator
               when OptColumn::COL_STRING
                 String
               else
-                raise StandardError.new("Unknown col_type #{column.col_type}")
+                record.errors[:col_type] << "#{column.col_type} is unknown"
               end
       unless val.is_a? klass
         record.errors[:value] << " have invalid type in column #{key.inspect}. Expected: #{klass}, actual: #{val.class}"
@@ -43,7 +43,7 @@ class OptRecord < ActiveRecord::Base
 
   def method_missing(name, *args)
     if /\A(c(\d+))(=?)\Z/ =~ name.to_s
-      col = OptColumn.find_by_id($~[2].to_i)
+      col = self.diary.opt_columns.find_by_id($~[2].to_i)
       return super unless col
       key = $~[1].to_sym
       if $~[3] == "="
