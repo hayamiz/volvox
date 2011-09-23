@@ -225,24 +225,51 @@ describe DiariesController do
                                         :content => "Edit")
     end
 
-    describe "for authors" do
+    describe "for signed-in users" do
       before(:each) do
         @user = test_sign_in(Factory(:user))
-        @user.participate(@diary)
       end
 
-      it "should have the link to new entry page" do
+      it "should not have the link to new entry page" do
         get :show, :id => @diary
-        response.should have_selector("a",
-                                      :href => new_diary_entry_path(@diary),
-                                      :content => "Write a new entry")
+        response.should_not have_selector("a", :href => new_diary_entry_path(@diary))
       end
 
-      it "should have the link to the edit page" do
+      it "should not have the link to the edit page" do
         get :show, :id => @diary
-        response.should have_selector("a",
-                                      :href => edit_diary_path(@diary),
-                                      :content => "Edit")
+        response.should_not have_selector("a", :href => edit_diary_path(@diary))
+      end
+
+      it "should not have a form for adding new OptRecord" do
+        get :show, :id => @diary
+        response.should_not have_selector("form",
+                                          :action => diary_opt_records_path(@diary))
+      end
+
+      describe "for authors" do
+        before(:each) do
+          @user.participate(@diary)
+        end
+
+        it "should have the link to new entry page" do
+          get :show, :id => @diary
+          response.should have_selector("a",
+                                        :href => new_diary_entry_path(@diary),
+                                        :content => "Write a new entry")
+        end
+
+        it "should have the link to the edit page" do
+          get :show, :id => @diary
+          response.should have_selector("a",
+                                        :href => edit_diary_path(@diary),
+                                        :content => "Edit")
+        end
+
+        it "should have a form for adding new OptRecord" do
+          get :show, :id => @diary
+          response.should have_selector("form",
+                                        :action => diary_opt_records_path(@diary))
+        end
       end
     end
 

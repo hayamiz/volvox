@@ -2,13 +2,24 @@
 <header>
   <h1><%= @diary.title %></h1>
   <p><%= @diary.desc %></p>
-  <% if signed_in? %>
+  <% if signed_in? && current_user.author?(@diary) %>
     <ul>
       <li><%= link_to "Write a new entry", new_diary_entry_path(@diary) %></li>
       <li><%= link_to "Edit", edit_diary_path(@diary) %></li>
     </ul>
   <% end  %>
 </header>
+
+<% if signed_in? && current_user.author?(@diary) %>
+<section>
+  <%= form_for([@diary, @diary.opt_records.build]) do |f| %>
+    <%= f.text_field :time %>
+    <div class="actions">
+      <%= f.submit "Add a record" %>
+    </div>
+  <% end %>
+</section>
+<% end  %>
 
 <%= will_paginate @entries %>
 
