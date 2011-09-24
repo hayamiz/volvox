@@ -113,6 +113,11 @@ describe OptRecord do
       @record.should respond_to(:value)
     end
 
+    it "should return empty Hash for empty OptRecord" do
+      empty_record = @diary.opt_records.build
+      empty_record.value.should == {}
+    end
+
     it "should return the right value" do
       @record.value.should == @value
       @record.value[@column1.ckey].should == @value[@column1.ckey]
@@ -127,11 +132,7 @@ describe OptRecord do
       @col2 = Factory(:opt_column, :name => "Fat", :diary => @diary)
       @col3 = Factory(:opt_column, :name => "body",
                       :diary => Factory(:diary, :title => "Yet Another Diary"))
-      @record = @diary.opt_records.build(:time => Time.now,
-                                         :value => {
-                                           @col1.ckey => 1.0,
-                                           @col2.ckey => 2.0
-                                         })
+      @record = @diary.opt_records.build
     end
 
     it "should respond to 'column key' methods" do
@@ -140,15 +141,9 @@ describe OptRecord do
       end
     end
 
-    it "should return right values" do
-      @record.send(@col1.ckey).should == 1.0
-      @record.send(@col2.ckey).should == 2.0
-    end
-
-    it "should update :value attribute" do
-      @record.send(@col1.ckey.to_s+"=", 3.0)
-      @record.send(@col1.ckey).should == 3.0
-      @record.value.should == { @col1.ckey => 3.0, @col2.ckey => 2.0 }
+    it "should return nil for unset columns" do
+      @record.send(@col1.ckey).should be_nil
+      @record.send(@col2.ckey).should be_nil
     end
 
     it "should raise NoMethodError for unknown column" do
@@ -161,6 +156,27 @@ describe OptRecord do
       lambda do
         @record.hogehogepiyopiyo
       end.should raise_error
+    end
+
+    describe "for non-empty record" do
+      before(:each) do
+        @record = @diary.opt_records.build(:time => Time.now,
+                                           :value => {
+                                             @col1.ckey => 1.0,
+                                             @col2.ckey => 2.0
+                                           })
+      end
+
+      it "should return right values" do
+        @record.send(@col1.ckey).should == 1.0
+        @record.send(@col2.ckey).should == 2.0
+      end
+
+      it "should update :value attribute" do
+        @record.send(@col1.ckey.to_s+"=", 3.0)
+        @record.send(@col1.ckey).should == 3.0
+        @record.value.should == { @col1.ckey => 3.0, @col2.ckey => 2.0 }
+      end
     end
   end
 end

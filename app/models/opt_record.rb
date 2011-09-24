@@ -66,7 +66,9 @@ class OptRecord < ActiveRecord::Base
   end
 
   def value
-    if self[:value].is_a? String
+    if self[:value].nil?
+      {}
+    elsif self[:value].is_a? String
       YAML.load(self[:value])
     else
       self[:value]
