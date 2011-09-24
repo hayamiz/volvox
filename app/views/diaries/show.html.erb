@@ -25,7 +25,7 @@
       </tr>
       <tr>
 	<td>
-	  <%= f.text_field :time, :type => "datetime-local", :value => Time.now %>
+	  <%= f.text_field :time, :type => "datetime-local", :value => Time.now.strftime("%Y-%m-%dT%H:%M") %>
 	</td>
 <% @diary.opt_columns.all.each do |col|  %>
 	<td>

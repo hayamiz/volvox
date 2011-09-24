@@ -282,6 +282,7 @@ describe DiariesController do
             get :show, :id => @diary
             response.should have_selector("form",
                                           :action => diary_opt_records_path(@diary))
+            response.should have_selector("input[name='opt_record[time]'][value='#{Time.now.strftime("%Y-%m-%dT%H:%M")}']")
             @diary.opt_columns.all.each do |col|
               response.should have_selector("input[name='opt_record[#{col.ckey}]']")
             end
