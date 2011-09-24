@@ -14,7 +14,7 @@ class OptRecordsController < ApplicationController
     @opt_record = @diary.opt_records.build(:time => params[:opt_record][:time])
     value = {}
     @diary.opt_columns.all.each do |col|
-      if params[:opt_record][col.ckey]
+      if params[:opt_record][col.ckey] && (! params[:opt_record][col.ckey].empty?)
         case col.col_type
         when OptColumn::COL_INTEGER
           value[col.ckey] = params[:opt_record][col.ckey].to_i

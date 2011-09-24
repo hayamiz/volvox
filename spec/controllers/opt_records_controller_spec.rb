@@ -87,6 +87,30 @@ describe OptRecordsController do
           flash[:success].should_not be_nil
           flash[:success].should_not be_empty
         end
+
+        describe "with some columns" do
+          before(:each) do
+            @col1 = @column
+            @col2 = Factory(:opt_column, :diary => @diary, :name => Factory.next(:col_name))
+            @attr = {
+              :time => Time.at(0),
+              @col1.ckey => 10,
+              @col2.ckey => ""
+            }
+          end
+
+          it "should create an instance" do
+            lambda do
+              post :create, :diary_id => @diary, :opt_record => @attr
+            end.should change(OptRecord, :count).by(1)
+          end
+
+          it "should create an instance with nil for col2" do
+            post :create, :diary_id => @diary, :opt_record => @attr
+            opt_record = assigns(:opt_record)
+            opt_record.send(@col2.ckey).should be_nil
+          end
+        end
       end
     end
   end
