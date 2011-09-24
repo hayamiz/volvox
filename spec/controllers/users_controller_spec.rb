@@ -37,7 +37,7 @@ describe UsersController do
     it "should have required fields" do
       get :new
       response.should have_selector("input[name='user[name]'][type='text']")
-      response.should have_selector("input[name='user[email]'][type='text']")
+      response.should have_selector("input[name='user[email]'][type='email']")
       response.should have_selector("input[name='user[password]'][type='password']")
       response.should have_selector("input[name='user[password_confirmation]']" \
                                     "[type='password']")
@@ -169,7 +169,7 @@ describe UsersController do
         get :edit, :id => @user
         response.should have_selector("input[name='user[name]'][type='text']",
                                       :value => @user.name)
-        response.should have_selector("input[name='user[email]'][type='text']",
+        response.should have_selector("input[name='user[email]'][type='email']",
                                       :value => @user.email)
         response.should have_selector("input[name='user[password]'][type='password']")
         response.should have_selector("input[name='user[password_confirmation]'][type='password']")
