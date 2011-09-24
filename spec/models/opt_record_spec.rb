@@ -13,6 +13,20 @@ describe OptRecord do
     OptRecord.new.should respond_to(:diary_id)
   end
 
+  describe "default_scope" do
+    before(:each) do
+      @diary = Factory(:diary)
+      @col = Factory(:opt_column, :diary => @diary)
+      @rec1 = Factory(:opt_record, :diary => @diary, :value => {@col.ckey => 1.0}, :time => Time.now - 5)
+      @rec2 = Factory(:opt_record, :diary => @diary, :value => {@col.ckey => 1.0}, :time => Time.now - 10)
+      @rec3 = Factory(:opt_record, :diary => @diary, :value => {@col.ckey => 1.0}, :time => Time.now)
+    end
+
+    it "should order records by :time in descending order" do
+      @diary.opt_records.should == [@rec3, @rec1, @rec2]
+    end
+  end
+
   describe "accessibility" do
     it "should allow access to time" do
       t = Time.now

@@ -34,6 +34,7 @@ end
 
 class OptRecord < ActiveRecord::Base
   attr_accessible :time, :value
+  default_scope :order => 'opt_records.time DESC'
 
   validates(:time, :presence => true)
   validates(:value, :presence => true)
