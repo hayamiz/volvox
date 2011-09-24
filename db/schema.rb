@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110914202648) do
+ActiveRecord::Schema.define(:version => 20110924191552) do
 
   create_table "authorships", :force => true do |t|
     t.integer  "user_id"
@@ -56,14 +56,12 @@ ActiveRecord::Schema.define(:version => 20110914202648) do
   end
 
   create_table "opt_records", :force => true do |t|
-    t.time     "time"
     t.string   "value"
     t.integer  "diary_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "time"
   end
-
-  add_index "opt_records", ["time"], :name => "opt_records_time_idx"
 
   create_table "users", :force => true do |t|
     t.string   "name"
