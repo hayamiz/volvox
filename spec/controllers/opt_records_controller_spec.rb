@@ -88,14 +88,38 @@ describe OptRecordsController do
           flash[:success].should_not be_empty
         end
 
+        describe "with invalid inputs" do
+          before(:each) do
+            @attr = {
+              :time => Time.now,
+              @column.ckey => ""
+            }
+          end
+
+          it "should not create an instance" do
+            lambda do
+              post :create, :diary_id => @diary, :opt_record => @attr
+            end.should_not change(OptRecord, :count)
+          end
+
+          it "should have error flash message" do
+            post :create, :diary_id => @diary, :opt_record => @attr
+            flash[:error].should_not be_empty
+          end
+        end
+
         describe "with some columns" do
           before(:each) do
             @col1 = @column
             @col2 = Factory(:opt_column, :diary => @diary, :name => Factory.next(:col_name))
+            @col3 = Factory(:opt_column, :diary => @diary, :name => Factory.next(:col_name), :col_type => OptColumn::COL_INTEGER)
+            @col4 = Factory(:opt_column, :diary => @diary, :name => Factory.next(:col_name), :col_type => OptColumn::COL_STRING)
             @attr = {
               :time => Time.at(0),
-              @col1.ckey => 10,
-              @col2.ckey => ""
+              @col1.ckey => 10.0,
+              @col2.ckey => "",
+              @col3.ckey => "1234",
+              @col4.ckey => "hoge"
             }
           end
 
