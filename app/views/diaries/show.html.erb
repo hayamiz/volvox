@@ -2,21 +2,44 @@
 <header>
   <h1><%= @diary.title %></h1>
   <p><%= @diary.desc %></p>
-  <% if signed_in? && current_user.author?(@diary) %>
-    <ul>
+  <ul>
+    <% if signed_in? && current_user.author?(@diary) %>
       <li><%= link_to "Write a new entry", new_diary_entry_path(@diary) %></li>
       <li><%= link_to "Edit", edit_diary_path(@diary) %></li>
-    </ul>
-  <% end  %>
+    <% end  %>
+    <% if @diary.opt_columns.count > 0  %>
+      <li><%= link_to "See records", diary_opt_records_path(@diary) %></li>
+    <% end  %>
+  </ul>
 </header>
 
-<% if signed_in? && current_user.author?(@diary) %>
+<% if signed_in? && current_user.author?(@diary) && @diary.opt_columns.count > 0 %>
 <section>
   <%= form_for([@diary, @diary.opt_records.build]) do |f| %>
-    <%= f.text_field :time %>
-    <div class="actions">
-      <%= f.submit "Add a record" %>
-    </div>
+    <table>
+      <tr>
+	<th>Time</th>
+<% @diary.opt_columns.all.each do |col|  %>
+	<th><%= col.name %></th>
+<% end  %>
+      </tr>
+      <tr>
+	<td>
+	  <%= f.text_field :time, :type => "datetime-local", :value => Time.now %>
+	</td>
+<% @diary.opt_columns.all.each do |col|  %>
+	<td>
+	  <%= f.text_field col.ckey, :placeholder => OptColumn.col_type_name(col.col_type) %>
+	</td>
+<% end  %>
+      </tr>
+      <tr>
+	<td colspan="<%= @diary.opt_columns.count + 1 %>">
+	  <%= f.submit "Add a record" %>
+	</td>
+      </tr>
+    </table>
+
   <% end %>
 </section>
 <% end  %>

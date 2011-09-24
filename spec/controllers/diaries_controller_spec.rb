@@ -265,10 +265,27 @@ describe DiariesController do
                                         :content => "Edit")
         end
 
-        it "should have a form for adding new OptRecord" do
+        it "should not have a form for adding new OptRecord" do
           get :show, :id => @diary
-          response.should have_selector("form",
-                                        :action => diary_opt_records_path(@diary))
+          response.should_not have_selector("form",
+                                            :action => diary_opt_records_path(@diary))
+        end
+
+        describe "with some OptColumns" do
+          before(:each) do
+            Factory(:opt_column, :diary => @diary)
+            Factory(:opt_column, :diary => @diary, :name => Factory.next(:col_name))
+            Factory(:opt_column, :diary => @diary, :name => Factory.next(:col_name))
+          end
+
+          it "should have a form for adding new OptRecord" do
+            get :show, :id => @diary
+            response.should have_selector("form",
+                                          :action => diary_opt_records_path(@diary))
+            @diary.opt_columns.all.each do |col|
+              response.should have_selector("input[name='opt_record[#{col.ckey}]']")
+            end
+          end
         end
       end
     end
