@@ -6,4 +6,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
+//= require amcharts/swfobject
+//= require amcharts/amcharts
+//= require amcharts/amfallback
+//= require amcharts/raphael
