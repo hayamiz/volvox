@@ -3,7 +3,7 @@
   <tr>
     <th>Time</th>
     <% @opt_columns.each do |col| %>
-      <th><%= col.name %></th>
+      <th><%= link_to(col.name, diary_opt_column_path(@diary, col)) %></th>
     <% end %>
   </tr>
   <% @opt_records.each do |rec| %>

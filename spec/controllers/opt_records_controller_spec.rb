@@ -30,6 +30,14 @@ describe OptRecordsController do
       response_xpath("//table/tr/th").size.should == @cols.size + 1 # time + col names
       response_xpath("//table/tr/td").size.should == (@cols.size + 1) * @records.size
     end
+
+    it "should have links to opt_columns#show of each column" do
+      get :index, :diary_id => @diary
+      @cols.each do |col|
+        response.should have_selector("a",
+                                      :href => diary_opt_column_path(@diary, col))
+      end
+    end
   end
 
   describe "create method" do
