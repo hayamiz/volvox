@@ -1,6 +1,6 @@
 
 class Authorship < ActiveRecord::Base
-  attr_accessible :diary_id
+  attr_accessible :user_id, :diary_id
 
   belongs_to :author, :class_name => "User", :foreign_key => "user_id"
   belongs_to :diary, :class_name => "Diary", :foreign_key => "diary_id"

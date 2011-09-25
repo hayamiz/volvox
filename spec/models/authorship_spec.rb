@@ -11,6 +11,18 @@ describe Authorship do
     @authorship.save!
   end
 
+  describe "accessibility of attributes" do
+    it "should allow access to :diary_id" do
+      authorship = Authorship.new(:diary_id => 1234)
+      authorship.diary_id.should == 1234
+    end
+
+    it "should allow access to :user_id" do
+      authorship = Authorship.new(:user_id => 2345)
+      authorship.user_id.should == 2345
+    end
+  end
+
   describe "validation" do
     it "should not create an instance without user_id" do
       @authorship.user_id = nil
