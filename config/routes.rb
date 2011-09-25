@@ -7,6 +7,7 @@ Volvox::Application.routes.draw do
     resources :opt_columns
     resources :opt_records
   end
+  resources :authorships, :only => [:create, :destroy]
 
   root :to => "pages#home"
 
