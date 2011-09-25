@@ -7,6 +7,10 @@ namespace :db do
                         :email			=> "info@hayamin.com",
                         :password		=> "hogehoge",
                         :password_confirmation	=> "hogehoge")
+    User.create!(:name => Faker::Name.name,
+                 :email => Faker::Internet.email,
+                 :password => "foobar",
+                 :password_confirmation => "foobar")
     diary = Diary.create!(:title => "Volvox diary",
                           :desc => "This is a sample diary")
     col1 = diary.opt_columns.create!(:name => "Weight [g]", :col_type => OptColumn::COL_FLOAT)
