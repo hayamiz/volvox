@@ -15,9 +15,11 @@ namespace :db do
     61.times do |n|
       diary.entries.create!(:date => Date.today - n,
                             :memo => Faker::Lorem.paragraphs(5).join("\n\n"))
-      diary.opt_records.create!(:time => Time.now,
+      time = n.days.ago + (rand - 0.5) * 24 * 3600
+      weight = 200 - n + (rand - 0.5) * 10
+      diary.opt_records.create!(:time => time,
                                 :value => {
-                                  col1.ckey => 100.0 + rand * 100,
+                                  col1.ckey => weight,
                                   col2.ckey => 10.0 * rand
                                 })
     end
