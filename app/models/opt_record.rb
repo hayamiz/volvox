@@ -75,6 +75,18 @@ class OptRecord < ActiveRecord::Base
       self[:value]
     end
   end
+
+  class << self
+    def of(opt_column)
+      unless opt_column && opt_column.diary
+        return []
+      end
+
+      opt_column.diary.opt_records.select do |rec|
+        ! rec.value[opt_column.ckey].nil?
+      end
+    end
+  end
 end
 # == Schema Information
 #

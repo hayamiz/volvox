@@ -193,6 +193,51 @@ describe OptRecord do
       end
     end
   end
+
+  describe "'of' class method" do
+    it "should respond to :of" do
+      OptRecord.should respond_to(:of)
+    end
+
+    describe "with unsaved empty OptColumn" do
+      before(:each) do
+        @opt_column = OptColumn.new
+      end
+
+      it "should return emtpy Array" do
+        OptRecord.of(@opt_column).should == []
+      end
+    end
+
+    describe "with existing OptColumn" do
+      before(:each) do
+        @diary = Factory(:diary)
+        @opt_column = Factory(:opt_column, :diary => @diary)
+        @another_column = Factory(:opt_column, :diary => @diary,
+                                  :name => Factory.next(:col_name))
+        @opt_records = []
+        3.times do |n|
+          @opt_records << @diary.opt_records.create!(:time => Time.now - n,
+                                                     :value => {
+                                                       @opt_column.ckey => n.to_f,
+                                                       @another_column.ckey => (-n).to_f
+                                                     })
+        end
+
+        @other_records = []
+        3.times do |n|
+          @other_records << @diary.opt_records.create!(:time => Time.now + n,
+                                                       :value => {
+                                                         @another_column.ckey => (-n).to_f
+                                                       })
+        end
+      end
+
+      it "should return records of OptColumn" do
+        OptRecord.of(@opt_column).should == @opt_records
+      end
+    end
+  end
 end
 # == Schema Information
 #
