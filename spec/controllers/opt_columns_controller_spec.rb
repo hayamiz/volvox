@@ -71,4 +71,64 @@ describe OptColumnsController do
       end
     end
   end
+
+  describe "GET 'show'" do
+    before(:each) do
+      @user = Factory(:user)
+      @diary = Factory(:diary)
+      @user.participate(@diary)
+
+      @col_float = @diary.opt_columns.create!(:name => "Weight[g]",
+                                              :col_type => OptColumn::COL_FLOAT)
+      @col_string = @diary.opt_columns.create!(:name => "Memo",
+                                               :col_type => OptColumn::COL_STRING)
+    end
+
+    it "should return 404 for non-existing column id" do
+      get :show, :diary_id => @diary, :id => 9999
+      response.response_code.should == 404
+    end
+
+    describe "with float data" do
+      before(:each) do
+        @float_records = []
+        30.times do |n|
+          record = @diary.opt_records.create!(:time => (n.days.ago + 24 * 3600 * (rand - 0.5)),
+                                              :value => { @col_float.ckey => 100 + rand * 100 })
+          @float_records.push(record)
+        end
+        @float_records = @float_records.sort_by{|rec| rec.time }
+      end
+
+      it "should have a div for a chart" do
+        get :show, :diary_id => @diary, :id => @col_float
+        response.should have_selector("div#chart-#{@col_float.ckey}")
+      end
+
+      it "should have a table listing values for target column" do
+        get :show, :diary_id => @diary, :id => @col_float
+        response_xpath("//table/tr/td[2]").size.should > 0
+        response_xpath("//table/tr/td[2]").each_with_index do |td_tag, idx|
+          td_tag.inner_text.to_f.should == @float_records[idx].value[@col_float.ckey]
+        end
+      end
+
+      it "should respond text/javascript to :format => :js" do
+        get :show, :diary_id => @diary, :id => @col_float, :format => :js
+        response.content_type.should == "text/javascript"
+      end
+
+      it "should render valid javascript for :format => :js" do
+        get :show, :diary_id => @diary, :id => @col_float, :format => :js
+        body = response.body
+        @float_records.each do |rec|
+          record_line = body.lines.select do |line|
+            line =~ /\/\* record #{rec.id} \*\// # extract record by annotated comment
+          end.first
+          record_line.should_not be_nil
+          record_line.should =~ /value:.*#{Regexp.quote(sprintf("%.2f", rec.value[@col_float.ckey]))}/
+        end
+      end
+    end
+  end
 end

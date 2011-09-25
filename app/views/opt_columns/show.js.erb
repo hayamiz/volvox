@@ -1,0 +1,62 @@
+var lineChartData = [
+<% @opt_records.each do |record| %>
+	{date:new Date(<%= t = record.time; [t.year,t.month,t.day,t.hour,t.min,t.sec].join(',') %>),value:<%= sprintf("%.2f", record.value[@opt_column.ckey]) %>}, /* record <%= record.id %> */
+<% end %>
+];
+
+
+window.onload = function()
+{
+    // CHART 2
+    var chart = new AmCharts.AmSerialChart();
+    
+    chart.dataProvider = lineChartData;
+    chart.pathToImages = "<%= image_path('amcharts/') %>";
+    chart.categoryField = 'date';
+    chart.marginRight = 5;
+    chart.marginLeft = 40;
+    chart.marginBottom = 20;
+    chart.marginTop = 20;
+    chart.panEventsEnabled = true;
+    
+    var catAxis = chart.categoryAxis;
+    catAxis.parseDates = true;
+    // catAxis.gridAlpha = 0;
+    catAxis.tickLength = 0;
+    catAxis.minPeriod = 'ss';
+    catAxis.autoGridCount = true;
+    catAxis.gridPosition = "start";
+    
+    var valueAxis = new AmCharts.ValueAxis();
+    valueAxis.dashLength = 4;
+    valueAxis.axisAlpha = 0;
+    valueAxis.unit = "g";
+    valueAxis.minimum = 0;
+    chart.addValueAxis(valueAxis);
+
+    var graph = new AmCharts.AmGraph();
+    graph.valueField = 'value';
+    graph.type = 'line';
+    graph.lineColor = 'blue';
+    chart.addGraph(graph);
+    
+    var chartCursor = new AmCharts.ChartCursor();
+    chart.addChartCursor(chartCursor);
+    
+    var chartScrollbar = new AmCharts.ChartScrollbar();
+    chartScrollbar.hideResizeGrips = false;
+    chartScrollbar.graph = graph;
+    chartScrollbar.scrollBarHeight = 20;
+    chart.addChartScrollbar(chartScrollbar);
+
+    // var guide = {};
+    // guide.value = 100;
+    // guide.toValue = 200;
+    // guide.lineColor = "#000000";
+    // guide.fillColor = "#ff0000";
+    // guide.fillAlpha = 0.2;
+    // guide.balloonText = "hello world";
+    // valueAxis.addGuide(guide);
+
+    chart.write('chart-<%= @opt_column.ckey %>');
+}

@@ -1,0 +1,13 @@
+
+<div id="chart-<%= @opt_column.ckey %>" style="width:600px; height:400px">
+</div>
+
+<table>
+  <tr><th>Time</th><th><%= @opt_column.name %></th></tr>
+<% @opt_records.each do |record| %>
+  <tr><td><%= record.time %></td><td><%= record.value[@opt_column.ckey] %></td></tr>
+<% end  %>
+</table>
+
+<script src="<%= diary_opt_column_path(@diary, @opt_column, :format => :js) %>">
+</script>
