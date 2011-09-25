@@ -24,6 +24,15 @@ class UsersController < ApplicationController
       return
     end
     @diaries = @user.diaries.paginate(:page => params[:page])
+
+    # diaries to which current user can invite @user
+    @diaries_for_invite = nil
+    if signed_in?
+      @diaries_for_invite = current_user.diaries.select do |diary|
+        ! @user.author?(diary)
+      end
+      @diaries_for_invite = nil if @diaries_for_invite.empty?
+    end
   end
 
   def edit

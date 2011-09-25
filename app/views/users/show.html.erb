@@ -3,6 +3,15 @@
   <%= @user.name %>
 </h1>
 
+<% if @diaries_for_invite %>
+  <%= form_for(@user.authorships.build) do |f| %>
+    <%= f.hidden_field :user_id %>
+    Let "<%= @user.name %>" to join
+    <%= f.select :diary_id, @diaries_for_invite.map{|diary| [diary.title, diary.id]} %>
+    <%= f.submit 'Submit' %>
+  <% end  %>
+<% end  %>
+
 <%= will_paginate @diaries %>
 <ul class="diary-list">
   <% @user.diaries.each do |diary| %>

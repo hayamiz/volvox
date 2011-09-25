@@ -144,6 +144,33 @@ describe UsersController do
         end
       end
     end
+
+    describe "invitation of a diary authorship" do
+      before(:each) do
+        @other = Factory(:user,
+                         :name => Faker::Name.name,
+                         :email => Factory.next(:email))
+        @diary = Factory(:diary)
+        @user.participate(@diary)
+        test_sign_in(@user)
+      end
+
+      it "should have a link for invitation of a diary authorship" do
+        get :show, :id => @other
+        response.should have_selector("form[action='#{authorships_path}']")
+      end
+
+      describe "the user is already an author" do
+        before(:each) do
+          @other.participate(@diary)
+        end
+
+        it "should not have a link for invitation" do
+          get :show, :id => @other
+          response.should_not have_selector("form[action='#{authorships_path}']")
+        end
+      end
+    end
   end
 
   describe "GET 'edit'" do
