@@ -131,6 +131,35 @@ describe DiariesController do
         response.should have_selector("input[type='text'][name='diary[title]']")
         response.should have_selector("input[type='text'][name='diary[desc]']")
       end
+
+      it "should have a author list" do
+        get :edit, :id => @diary
+        @diary.authors.each do |author|
+          response.should have_selector("li.author", :content => author.name)
+          response.should have_selector("a", :href => user_path(author))
+        end
+      end
+
+      describe "with many authors" do
+        before(:each) do
+          @authors = [@user]
+          5.times do
+            user = Factory(:user,
+                           :name => Faker::Name.name,
+                           :email => Factory.next(:email))
+            user.participate(@diary)
+            @authors << user
+          end
+        end
+
+        it "should have the right author list" do
+          get :edit, :id => @diary
+          @diary.authors.each do |author|
+            response.should have_selector("section.main li.author", :content => author.name)
+            response.should have_selector("a", :href => user_path(author))
+          end
+        end
+      end
     end
   end
 

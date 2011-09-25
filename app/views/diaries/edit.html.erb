@@ -37,3 +37,13 @@
     </div>
   </div>
 <% end %>
+
+<hr />
+
+<h2>Authors of <%= @diary.title %></h2>
+
+<ul class="authors">
+  <% @diary.authors.each do |author| %>
+    <li class="author"><%= link_to(author.name, user_path(author)) %></li>
+  <% end %>
+</ul>
