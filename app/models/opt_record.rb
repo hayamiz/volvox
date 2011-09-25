@@ -93,10 +93,10 @@ end
 # Table name: opt_records
 #
 #  id         :integer         not null, primary key
-#  time       :time
 #  value      :string(255)
 #  diary_id   :integer
 #  created_at :datetime
 #  updated_at :datetime
+#  time       :datetime
 #
 
