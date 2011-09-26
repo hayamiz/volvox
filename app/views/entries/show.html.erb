@@ -1,3 +1,6 @@
+<nav>
+  <%= link_to "Back to diary", diary_path(@diary) %>
+</nav>
 
 <article class="entry">
   <header class="entry-header">
@@ -20,29 +23,19 @@
 	<td><%=raw markdown(@entry.action_feed) || "N/A" %></td>
 	<td><%=raw markdown(@entry.action_care) || "N/A" %></td>
       </tr>
-    </table>
-
-    <table>
       <tr>
 	<th>Feces</th>
-      </tr>
-      <tr>
-	<td><%=raw markdown(@entry.pet_feces) || "N/A" %></td>
-      </tr>
-      <tr>
 	<th>Physical conditions</th>
       </tr>
       <tr>
+	<td><%=raw markdown(@entry.pet_feces) || "N/A" %></td>
 	<td><%=raw markdown(@entry.pet_physical) || "N/A" %></td>
       </tr>
-    </table>
-
-    <table>
       <tr>
-	<th>Memo</th>
+	<th colspan="2">Memo</th>
       </tr>
       <tr>
-	<td><%=raw markdown(@entry.memo) || "N/A" %></td>
+	<td colspan="2"><%=raw markdown(@entry.memo) || "N/A" %></td>
       </tr>
     </table>
   </section>
