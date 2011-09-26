@@ -302,9 +302,11 @@ describe DiariesController do
 
         describe "with some OptColumns" do
           before(:each) do
-            Factory(:opt_column, :diary => @diary)
-            Factory(:opt_column, :diary => @diary, :name => Factory.next(:col_name))
-            Factory(:opt_column, :diary => @diary, :name => Factory.next(:col_name))
+            @col1 = Factory(:opt_column, :diary => @diary)
+            @col2 = Factory(:opt_column, :diary => @diary,
+                            :name => Factory.next(:col_name))
+            @col3 = Factory(:opt_column, :diary => @diary,
+                            :name => Factory.next(:col_name))
           end
 
           it "should have a form for adding new OptRecord" do
@@ -315,6 +317,41 @@ describe DiariesController do
             @diary.opt_columns.all.each do |col|
               response.should have_selector("input[name='opt_record[#{col.ckey}]']")
             end
+          end
+
+          it "should have links for each OptColumn name" do
+            get :show, :id => @diary
+            @diary.opt_columns.all.each do |col|
+              response.should have_selector("a",
+                                            :href => diary_opt_column_path(@diary, col))
+            end
+          end
+
+          describe "with some records" do
+            before(:each) do
+              @records = []
+              @records << @diary.opt_records.create!(:time => Time.now,
+                                                     :value => {
+                                                       @col1.ckey => 1.0,
+                                                       @col2.ckey => 1.0,
+                                                     })
+              @records << @diary.opt_records.create!(:time => Time.now,
+                                                     :value => {
+                                                       @col1.ckey => 1.0,
+                                                     })
+            end
+          end
+
+          it "should show # of records" do
+            get :show, :id => @diary
+            response_xpath('//table/tr[3]/td[2]').size.should == 1
+            response_xpath('//table/tr[3]/td[2]').first.inner_text.should include("2 records")
+
+            response_xpath('//table/tr[3]/td[3]').size.should == 1
+            response_xpath('//table/tr[3]/td[3]').first.inner_text.should include("1 record")
+
+            response_xpath('//table/tr[3]/td[4]').size.should == 1
+            response_xpath('//table/tr[3]/td[4]').first.inner_text.should include("0 record")
           end
         end
       end

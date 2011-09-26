@@ -20,7 +20,7 @@
       <tr>
 	<th>Time</th>
 <% @diary.opt_columns.all.each do |col|  %>
-	<th><%= col.name %></th>
+	<th><%= link_to col.name, diary_opt_column_path(@diary, col) %></th>
 <% end  %>
       </tr>
       <tr>
@@ -34,6 +34,11 @@
 <% end  %>
       </tr>
       <tr>
+	<td> &nbsp; </td>
+	<% @opt_columns.each do |col| %>
+	  <td><%= c = @record_counts[col.ckey]; pluralize(c, "record") %></td>
+	<% end %>
+      </tr>
 	<td colspan="<%= @diary.opt_columns.count + 1 %>">
 	  <%= f.submit "Add a record" %>
 	</td>
