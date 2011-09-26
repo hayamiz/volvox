@@ -89,6 +89,16 @@ describe OptColumnsController do
       response.response_code.should == 404
     end
 
+    it "should say 'no record' when there is no records" do
+      get :show, :diary_id => @diary, :id => @col_float
+      response.should contain("no record")
+    end
+
+    it "should have a link to opt_records#index" do
+      get :show, :diary_id => @diary, :id => @col_float
+      response.should have_selector("a", :href => diary_opt_records_path(@diary))
+    end
+
     describe "with float data" do
       before(:each) do
         @float_records = []
