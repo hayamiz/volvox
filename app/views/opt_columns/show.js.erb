@@ -13,10 +13,10 @@ window.onload = function()
     chart.dataProvider = lineChartData;
     chart.pathToImages = "<%= image_path('amcharts/') %>";
     chart.categoryField = 'date';
-    chart.marginRight = 5;
-    chart.marginLeft = 40;
-    chart.marginBottom = 20;
-    chart.marginTop = 20;
+    // chart.marginRight = 5;
+    // chart.marginLeft = 40;
+    // chart.marginBottom = 20;
+    // chart.marginTop = 20;
     chart.panEventsEnabled = true;
     
     var catAxis = chart.categoryAxis;
@@ -30,7 +30,7 @@ window.onload = function()
     var valueAxis = new AmCharts.ValueAxis();
     valueAxis.dashLength = 4;
     valueAxis.axisAlpha = 0;
-    valueAxis.unit = "g";
+    valueAxis.unit = "<%= (@opt_column.unit || '') %>";
     valueAxis.minimum = 0;
     chart.addValueAxis(valueAxis);
 
