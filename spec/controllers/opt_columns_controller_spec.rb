@@ -140,5 +140,17 @@ describe OptColumnsController do
         end
       end
     end
+
+    describe "with integer data" do
+      it "should write some specs" do
+        pending ""
+      end
+    end
+
+    describe "with string data" do
+      it "should write some specs" do
+        pending ""
+      end
+    end
   end
 end
