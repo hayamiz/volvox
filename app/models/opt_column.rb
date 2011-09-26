@@ -46,6 +46,12 @@ class OptColumn < ActiveRecord::Base
   def ckey
     "c#{self.id}".to_sym
   end
+
+  def unit
+    if self.name =~ /\[([^\]]+)\]\s*$/
+      $~[1]
+    end
+  end
 end
 # == Schema Information
 #

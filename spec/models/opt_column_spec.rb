@@ -181,6 +181,26 @@ describe OptColumn do
       end
     end
   end
+
+  describe "'unit' method" do
+    before(:each) do
+      @opt_column = OptColumn.new(:name => "Test column",
+                                  :col_type => OptColumn::COL_FLOAT)
+    end
+
+    it "should respond to :unit" do
+      @opt_column.should respond_to(:unit)
+    end
+
+    it "should return nil for column without unit description in :name attribute" do
+      @opt_column.unit.should == nil
+    end
+
+    it "should recognize unit description in :name" do
+      @opt_column.name = "Test column [original unit]"
+      @opt_column.unit.should == "original unit"
+    end
+  end
 end
 # == Schema Information
 #
