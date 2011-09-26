@@ -340,18 +340,19 @@ describe DiariesController do
                                                        @col1.ckey => 1.0,
                                                      })
             end
-          end
 
-          it "should show # of records" do
-            get :show, :id => @diary
-            response_xpath('//table/tr[3]/td[2]').size.should == 1
-            response_xpath('//table/tr[3]/td[2]').first.inner_text.should include("2 records")
 
-            response_xpath('//table/tr[3]/td[3]').size.should == 1
-            response_xpath('//table/tr[3]/td[3]').first.inner_text.should include("1 record")
+            it "should show # of records" do
+              get :show, :id => @diary
+              response_xpath('//table/tr[3]/td[2]').size.should == 1
+              response_xpath('//table/tr[3]/td[2]').first.inner_text.should include("2 records")
 
-            response_xpath('//table/tr[3]/td[4]').size.should == 1
-            response_xpath('//table/tr[3]/td[4]').first.inner_text.should include("0 record")
+              response_xpath('//table/tr[3]/td[3]').size.should == 1
+              response_xpath('//table/tr[3]/td[3]').first.inner_text.should include("1 record")
+
+              response_xpath('//table/tr[3]/td[4]').size.should == 1
+              response_xpath('//table/tr[3]/td[4]').first.inner_text.should include("0 record")
+            end
           end
         end
       end
