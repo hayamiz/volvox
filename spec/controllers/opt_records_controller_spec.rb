@@ -38,6 +38,11 @@ describe OptRecordsController do
                                       :href => diary_opt_column_path(@diary, col))
       end
     end
+
+    it "should have a link to diaries#show" do
+      get :index, :diary_id => @diary
+      response.should have_selector("a", :href => diary_path(@diary))
+    end
   end
 
   describe "create method" do
