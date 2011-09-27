@@ -14,14 +14,16 @@ class OptRecordsController < ApplicationController
     @opt_record = @diary.opt_records.build(:time => params[:opt_record][:time])
     value = {}
     @diary.opt_columns.all.each do |col|
-      if params[:opt_record][col.ckey] && (! params[:opt_record][col.ckey].empty?)
+      ckey = col.ckey
+      val = params[:opt_record][ckey]
+      if val && (! val.empty?)
         case col.col_type
         when OptColumn::COL_INTEGER
-          value[col.ckey] = params[:opt_record][col.ckey].to_i
+          value[ckey] = val.to_i
         when OptColumn::COL_FLOAT
-          value[col.ckey] = params[:opt_record][col.ckey].to_f
+          value[ckey] = val.to_f
         when OptColumn::COL_STRING
-          value[col.ckey] = params[:opt_record][col.ckey].to_s
+          value[ckey] = val.to_s
         end
       end
     end

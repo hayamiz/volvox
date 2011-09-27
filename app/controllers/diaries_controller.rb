@@ -48,13 +48,10 @@ class DiariesController < ApplicationController
     if @diary
       @title = @diary.title
       @entries = @diary.entries.paginate(:page => params[:page])
-      if @diary.opt_columns.count > 0
-        @record_counts = {}
-        @opt_columns = @diary.opt_columns.all
-        @opt_columns.each do |col|
-          @record_counts[col.ckey] = 0
-        end
+      @opt_columns = @diary.opt_columns.all
 
+      if @opt_columns.size > 0
+        @record_counts = Hash.new { 0 }
         @diary.opt_records.each do |rec|
           @opt_columns.each do |col|
             @record_counts[col.ckey] += 1 if rec.value[col.ckey]

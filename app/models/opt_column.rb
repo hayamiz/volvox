@@ -16,7 +16,7 @@ class OptColumn < ActiveRecord::Base
 
     def add_col_type(name, val)
       @col_types = [] unless @col_types
-      if @col_types.find{|n,_| n == name}
+      if @col_types.find{|_name, _val| _name == name}
         return
       end
       self.const_set(name, val)

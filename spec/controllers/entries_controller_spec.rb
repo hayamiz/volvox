@@ -190,16 +190,16 @@ describe EntriesController do
 
         it "should not raise an error with empty date" do
           lambda do
-            attr = @attr.merge("date(1i)" => nil,
+            attr = @attr.merge("date(1i)" => "",
                                "date(2i)" => "9",
                                "date(3i)" => "12")
             post :create, :diary_id => @diary, :entry => attr
           end.should_not raise_error
 
           lambda do
-            attr = @attr.merge("date(1i)" => nil,
-                               "date(2i)" => nil,
-                               "date(3i)" => nil)
+            attr = @attr.merge("date(1i)" => "",
+                               "date(2i)" => "",
+                               "date(3i)" => "")
             post :create, :diary_id => @diary, :entry => attr
           end.should_not raise_error
         end
@@ -215,17 +215,17 @@ describe EntriesController do
 
         it "should reject empty date" do
           lambda do
-            attr = @attr.merge("date(1i)" => nil,
-                               "date(2i)" => nil,
-                               "date(3i)" => nil)
+            attr = @attr.merge("date(1i)" => "",
+                               "date(2i)" => "",
+                               "date(3i)" => "")
             post :create, :diary_id => @diary, :entry => attr
           end.should_not change(Entry, :count)
         end
 
         it "should render new page with invalid inputs" do
-          attr = @attr.merge("date(1i)" => nil,
-                             "date(2i)" => nil,
-                             "date(3i)" => nil)
+          attr = @attr.merge("date(1i)" => "",
+                             "date(2i)" => "",
+                             "date(3i)" => "")
           post :create, :diary_id => @diary, :entry => attr
           response.should render_template("entries/new")
         end

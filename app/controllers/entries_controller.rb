@@ -16,17 +16,7 @@ class EntriesController < ApplicationController
   end
 
   def create
-    begin
-      @entry = @diary.entries.build(params[:entry])
-    rescue NoMethodError
-      attr = params[:entry].dup
-      attr.delete("date(1i)")
-      attr.delete("date(2i)")
-      attr.delete("date(3i)")
-      @entry = @diary.entries.build(attr)
-      render 'entries/new'
-      return
-    end
+    @entry = @diary.entries.build(params[:entry])
 
     if @entry.save
       flash[:success] = t"entries.create.flash.success"

@@ -47,7 +47,7 @@ class UsersController < ApplicationController
       attr.delete(:password_confirmation)
     end
 
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes(attr)
       flash[:success] = t('users.update.flash.success')
       redirect_to @user
     else

@@ -1,8 +1,10 @@
 
 class ColumnExistenceValidator < ActiveModel::Validator
   def validate(record)
+    errors = record.errors
+
     unless record[:value].is_a? Hash
-      record.errors[:value] << " must be an instace of Hash"
+      errors[:value] << " must be an instace of Hash"
       return
     end
 
@@ -11,11 +13,12 @@ class ColumnExistenceValidator < ActiveModel::Validator
     record.value.each do |key, val|
       column = columns.find{|col| col.ckey == key}
       if column.nil?
-        record.errors[:value] << " includes invalid column key #{key.inspect}"
+        errors[:value] << " includes invalid column key: #{key}"
         next
       end
 
-      klass = case column.col_type
+      col_type = column.col_type
+      klass = case col_type
               when OptColumn::COL_INTEGER
                 Integer
               when OptColumn::COL_FLOAT
@@ -23,10 +26,10 @@ class ColumnExistenceValidator < ActiveModel::Validator
               when OptColumn::COL_STRING
                 String
               else
-                record.errors[:col_type] << "#{column.col_type} is unknown"
+                errors[:col_type] << "#{col_type} is unknown"
               end
       unless val.is_a? klass
-        record.errors[:value] << " have invalid type in column #{key.inspect}. Expected: #{klass}, actual: #{val.class}"
+        errors[:value] << " have invalid type in column: #{key}. Expected: #{klass}, actual: #{val.class}"
       end
     end
   end
@@ -47,10 +50,11 @@ class OptRecord < ActiveRecord::Base
       col = self.diary.opt_columns.find_by_id($~[2].to_i)
       return super unless col
       key = $~[1].to_sym
+      val = self.value
       if $~[3] == "="
-        self.value[key] = args[0]
+        val[key] = args[0]
       else
-        self.value[key]
+        val[key]
       end
     else
       super
@@ -67,12 +71,13 @@ class OptRecord < ActiveRecord::Base
   end
 
   def value
-    if self[:value].nil?
+    val = self[:value]
+    if val.nil?
       {}
-    elsif self[:value].is_a? String
-      YAML.load(self[:value])
+    elsif val.is_a? String
+      YAML.load(val)
     else
-      self[:value]
+      val
     end
   end
 
