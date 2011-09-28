@@ -1,47 +1,13 @@
-<nav>
-  <%= link_to "Back to diary", diary_path(@diary) %>
-</nav>
+<header>
+  <nav>
+    <%= link_to t('.back'), diary_path(@diary) %>
+  </nav>
+</header>
 
-<article class="entry">
-  <header class="entry-header">
-    <h1>
-      <%= @entry.date.to_s %>
-      <% if signed_in? && current_user.author?(@diary)  %>
-	<%= link_to "Edit", edit_diary_entry_path(@diary, @entry), :class => "red button" %>
-      <% end  %>
-    </h1>
-    <p class="meta">Temperature: <%= @entry.temperature || "N/A" %>&#x2103;, Humidity: <%= @entry.humidity || "N/A" %>% </p>
-    <p class="meta">Updated at:  <%= @entry.updated_at.localtime.strftime("%Y/%m/%d %H:%M:%S") %></p>
-  </header>
-  <section class="entry-body">
-    <table>
-      <tr>
-	<th style="width: 50%;">Feed</th>
-	<th style="width: 50%;">Care</th>
-      </tr>
-      <tr>
-	<td><%=raw markdown(@entry.action_feed) || "N/A" %></td>
-	<td><%=raw markdown(@entry.action_care) || "N/A" %></td>
-      </tr>
-      <tr>
-	<th>Feces</th>
-	<th>Physical conditions</th>
-      </tr>
-      <tr>
-	<td><%=raw markdown(@entry.pet_feces) || "N/A" %></td>
-	<td><%=raw markdown(@entry.pet_physical) || "N/A" %></td>
-      </tr>
-      <tr>
-	<th colspan="2">Memo</th>
-      </tr>
-      <tr>
-	<td colspan="2"><%=raw markdown(@entry.memo) || "N/A" %></td>
-      </tr>
-    </table>
-  </section>
-  <footer>
-    <nav>
-      <%= link_to "Back to diary", diary_path(@diary) %>
-    </nav>
-  </footer>
-</article>
+<%= render 'entry', :entry => @entry %>
+
+<footer>
+  <nav>
+    <%= link_to t('.back'), diary_path(@diary) %>
+  </nav>
+</footer>
