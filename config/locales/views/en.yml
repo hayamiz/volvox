@@ -37,3 +37,15 @@ en:
     author_of_diary:
       flash:
         non_author: "You are not an author of '%{title}'"
+    entry:
+      temperature: "Temperature"
+      humidity: "Humidity"
+      updated_at: "Updated at"
+      feed: "About feed"
+      care: "About care"
+      feces: "About feces"
+      physical: "About physical conditions"
+      memo: "Memo"
+      na: "N/A"
+    show:
+      back: "Back to diary"

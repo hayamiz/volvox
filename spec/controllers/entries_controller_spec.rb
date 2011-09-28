@@ -313,7 +313,7 @@ describe EntriesController do
     it "should show availability of attributes" do
       entry = Factory(:empty_entry, :diary => @diary, :date => Factory.next(:date), :memo => "memo")
       get :show, :diary_id => @diary, :id => entry
-      response.should have_selector("section.entry-body", :content => "N/A")
+      response.should have_selector("section.entry-body", :content => t('entries.entry.na'))
     end
 
     it "should sanitized malicious contents" do
@@ -331,7 +331,7 @@ describe EntriesController do
       get :show, :diary_id => @diary, :id => @entry
       response.should have_selector("a",
                                     :href => diary_path(@diary),
-                                    :content => "Back to diary")
+                                    :content => t('entries.show.back'))
     end
 
     describe "for non-authors" do

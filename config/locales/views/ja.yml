@@ -26,3 +26,15 @@ ja:
     author_of_diary:
       flash:
         non_author: "「%{title}」を編集することができません"
+    entry:
+      temperature: "気温"
+      humidity: "湿度"
+      updated_at: "更新日時"
+      feed: "餌やり"
+      care: "世話"
+      feces: "糞尿の様子"
+      physical: "身体の様子"
+      memo: "その他メモ"
+      na: "記録なし"
+    show:
+      back: "日記にもどる"
