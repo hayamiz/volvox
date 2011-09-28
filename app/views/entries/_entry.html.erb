@@ -1,0 +1,46 @@
+<article class="entry">
+  <header class="entry-header">
+    <h2>
+      <%= link_to entry.date.to_s, [@diary, entry] %>
+      <% if signed_in? && current_user.author?(@diary)  %>
+	<%= link_to "Edit", edit_diary_entry_path(@diary, entry), :class => "red button" %>
+      <% end  %>
+    </h2>
+    <p class="meta">
+      <%= t'.temperature' %>:
+      <%= entry.temperature || t('.na') %><% if entry.temperature  %>&#x2103;<% end %>,
+      <%= t'.humidity' %>:
+      <%= entry.humidity || t('.na') %><% if entry.humidity %>%<% end  %>
+    </p>
+    <p class="meta">
+      <%= t'.updated_at' %>:
+      <%= l(entry.updated_at.localtime, :format => :short) %>
+    </p>
+  </header>
+  <section class="entry-body">
+    <table>
+      <tr>
+	<th style="width: 50%;"><%= t'.feed' %></th>
+	<th style="width: 50%;"><%= t'.care' %></th>
+      </tr>
+      <tr>
+	<td><%=raw markdown(entry.action_feed) || t('.na') %></td>
+	<td><%=raw markdown(entry.action_care) || t('.na') %></td>
+      </tr>
+      <tr>
+	<th><%= t'.feces' %></th>
+	<th><%= t'.physical' %></th>
+      </tr>
+      <tr>
+	<td><%=raw markdown(entry.pet_feces) || t('.na') %></td>
+	<td><%=raw markdown(entry.pet_physical) || t('.na') %></td>
+      </tr>
+      <tr>
+	<th colspan="2"><%= t'.memo' %></th>
+      </tr>
+      <tr>
+	<td colspan="2"><%=raw markdown(entry.memo) || t('.na') %></td>
+      </tr>
+    </table>
+  </section>
+</article>
