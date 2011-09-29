@@ -8,3 +8,4 @@ Gemfile.lock
 /boru.csv
 /coverage/*
 /coverage.data
+/public/assets/*
