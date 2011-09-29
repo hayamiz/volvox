@@ -35,7 +35,6 @@ gem 'capistrano'
 group :development do
   gem 'faker', '0.9.5'
   gem 'rspec-rails', '2.6.1' 
-  gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
   gem 'rails_best_practices'
 end
 
