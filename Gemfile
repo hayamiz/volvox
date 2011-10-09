@@ -31,6 +31,7 @@ gem 'capistrano'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
+gem 'ripper', :platforms => :ruby_18
 
 group :development do
   gem 'faker', '0.9.5'
