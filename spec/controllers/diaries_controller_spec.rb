@@ -284,14 +284,14 @@ describe DiariesController do
           get :show, :id => @diary
           response.should have_selector("a",
                                         :href => new_diary_entry_path(@diary),
-                                        :content => "Write a new entry")
+                                        :content => t('diaries.show.new_entry'))
         end
 
         it "should have the link to the edit page" do
           get :show, :id => @diary
           response.should have_selector("a",
                                         :href => edit_diary_path(@diary),
-                                        :content => "Edit")
+                                        :content => t('diaries.show.edit'))
         end
 
         it "should not have a form for adding new OptRecord" do
@@ -406,6 +406,24 @@ describe DiariesController do
         response.should_not have_selector("a",
                                           :href => diary_path(:page => 2),
                                           :content => "Next")
+      end
+
+      describe "for authors" do
+        before(:each) do
+          @user = test_sign_in(Factory(:user))
+          @user.participate(@diary)
+        end
+
+        it "should have links to edit pages of entries" do
+          get :show, :id => @diary
+          @entries.each do |entry|
+            response.should have_selector("a",
+                                          :href => edit_diary_entry_path(@diary,
+                                                                         entry),
+                                          :content => t('entries.entry.edit'))
+            # response.should have_selector("section", :content => entry.content)
+          end
+        end
       end
     end
 

@@ -8,7 +8,7 @@ class DiariesController < ApplicationController
                 :only => [:edit, :update])
 
   def new
-    @title = "Create a new diary"
+    @title = t('diaries.new.title')
     @diary = Diary.new
   end
 
@@ -27,7 +27,7 @@ class DiariesController < ApplicationController
   end
 
   def edit
-    @title = "Edit the diary"
+    @title = t('diaries.edit.title')
     @opt_column = @diary.opt_columns.build
     @opt_columns = @diary.opt_columns.all
     add_debug(@opt_columns)

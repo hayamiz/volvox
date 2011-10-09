@@ -12,6 +12,15 @@ ja:
   sessions:
     new:
       title: "ログイン"
+  diaries:
+    new:
+      title: "新しい日記を作成"
+    edit:
+      title: "日記の設定を編集"
+      submit: "更新"
+    show:
+      new_entry: "新しいエントリを書く"
+      edit: "日記の設定を編集"
   entries:
     new:
       title: "新しいエントリを書く"
@@ -27,6 +36,7 @@ ja:
       flash:
         non_author: "「%{title}」を編集することができません"
     entry:
+      edit: "編集"
       temperature: "気温"
       humidity: "湿度"
       updated_at: "更新日時"

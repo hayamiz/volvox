@@ -3,7 +3,7 @@
     <h2>
       <%= link_to entry.date.to_s, [@diary, entry] %>
       <% if signed_in? && current_user.author?(@diary)  %>
-	<%= link_to "Edit", edit_diary_entry_path(@diary, entry), :class => "red button" %>
+	<%= link_to t('.edit'), edit_diary_entry_path(@diary, entry), :class => "red button" %>
       <% end  %>
     </h2>
     <p class="meta">

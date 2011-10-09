@@ -340,14 +340,14 @@ describe EntriesController do
         get :show, :diary_id => @diary, :id => @entry
         response.should_not have_selector("a",
                                           :href => edit_diary_entry_path(@diary, @entry),
-                                          :content => "Edit")
+                                          :content => t('entries.entry.edit'))
       end
 
       it "should not show Edit link for non-singed-in users" do
         get :show, :diary_id => @diary, :id => @entry
         response.should_not have_selector("a",
                                           :href => edit_diary_entry_path(@diary, @entry),
-                                          :content => "Edit")
+                                          :content => t('entries.entry.edit'))
       end
     end
 
@@ -361,7 +361,7 @@ describe EntriesController do
         get :show, :diary_id => @diary, :id => @entry
         response.should have_selector("a",
                                       :href => edit_diary_entry_path(@diary, @entry),
-                                      :content => "Edit")
+                                      :content => t('entries.entry.edit'))
       end
     end
   end

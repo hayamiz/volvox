@@ -20,6 +20,9 @@ en:
     edit:
       title: "Edit the diary"
       submit: "Update"
+    show:
+      new_entry: "Write a new entry"
+      edit: "Edit"
   entries:
     new:
       title: "New entry"
@@ -38,6 +41,7 @@ en:
       flash:
         non_author: "You are not an author of '%{title}'"
     entry:
+      edit: "Edit"
       temperature: "Temperature"
       humidity: "Humidity"
       updated_at: "Updated at"

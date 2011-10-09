@@ -4,8 +4,8 @@
   <p><%= @diary.desc %></p>
   <ul>
     <% if signed_in? && current_user.author?(@diary) %>
-      <li><%= link_to "Write a new entry", new_diary_entry_path(@diary) %></li>
-      <li><%= link_to "Edit", edit_diary_path(@diary) %></li>
+      <li><%= link_to t('.new_entry'), new_diary_entry_path(@diary) %></li>
+      <li><%= link_to t('.edit'), edit_diary_path(@diary) %></li>
     <% end  %>
     <% if @diary.opt_columns.count > 0  %>
       <li><%= link_to "See records", diary_opt_records_path(@diary) %></li>
