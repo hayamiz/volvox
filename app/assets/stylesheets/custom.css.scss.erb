@@ -76,9 +76,16 @@ header.main {
   }
 }
 
+footer.main {
+  text-align: center;
+  background-color: white;
+  padding: 5px;
+}
+
 section.main {
   background: #FFF8DC;
   padding: 20px;
+  margin-bottom: 20px;
 }
 
 .button, .button:visited {
@@ -281,5 +288,35 @@ div.pagination {
 form {
   textarea {
     height: 8em;
+  }
+}
+
+.icon-add {
+  line-height: 16px;
+  background: url(<%= image_path "icons/note_add.png" %>) no-repeat;
+  padding-left: 16px;
+}
+
+.icon-edit {
+  line-height: 16px;
+  background: url(<%= image_path "icons/note_edit.png" %>) no-repeat;
+  padding-left: 16px;
+}
+
+section.diary {
+  font-size: 100%;
+
+  header {
+    ul {
+      li {
+	list-style-type: none;
+	display: inline-block;
+        margin: 3px;
+
+        a {
+          
+        }
+      }
+    }
   }
 }

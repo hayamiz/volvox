@@ -40,7 +40,13 @@
         <%= yield %>
       </section>
 
-      <% if Rails.env.development? %>
+      <footer class="main">
+	Volvox. <br />
+	<%= link_to image_tag("famfamfam-logo.png"), "http://www.famfamfam.com/" %>
+      </footer>
+    </div>
+
+    <% if Rails.env.development? %>
       <section class="console">
         <%= debug(params) %>
         <%= debug(session) %>
@@ -48,7 +54,6 @@
 	  <%= @debug_objs.each{|obj| debug(obj)} %>
 	<% end %>
       </section>
-      <% end %>
-    </div>
+    <% end %>
   </body>
 </html>

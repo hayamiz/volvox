@@ -1,52 +1,53 @@
 
-<header>
-  <h1><%= @diary.title %></h1>
-  <p><%= @diary.desc %></p>
-  <ul>
-    <% if signed_in? && current_user.author?(@diary) %>
-      <li><%= link_to t('.new_entry'), new_diary_entry_path(@diary) %></li>
-      <li><%= link_to t('.edit'), edit_diary_path(@diary) %></li>
-    <% end  %>
-    <% if @diary.opt_columns.count > 0  %>
-      <li><%= link_to "See records", diary_opt_records_path(@diary) %></li>
-    <% end  %>
-  </ul>
-</header>
+<section class="diary">
+  <header>
+    <h1><%= @diary.title %></h1>
+    <p><%= @diary.desc %></p>
+    <ul>
+      <% if signed_in? && current_user.author?(@diary) %>
+	<li><%= link_to t('.new_entry'), new_diary_entry_path(@diary), :class => "icon-add" %></li>
+	<li><%= link_to t('.edit'), edit_diary_path(@diary), :class => "icon-edit" %></li>
+      <% end  %>
+      <% if @diary.opt_columns.count > 0  %>
+	<li><%= link_to "See records", diary_opt_records_path(@diary) %></li>
+      <% end  %>
+    </ul>
+  </header>
 
-<% if signed_in? && current_user.author?(@diary) && @diary.opt_columns.count > 0 %>
-<section>
-  <%= form_for([@diary, @diary.opt_records.build]) do |f| %>
-    <table>
-      <tr>
-	<th>Time</th>
-<% @diary.opt_columns.all.each do |col|  %>
-	<th><%= link_to col.name, diary_opt_column_path(@diary, col) %></th>
-<% end  %>
-      </tr>
-      <tr>
-	<td>
-	  <%= f.text_field :time, :type => "datetime-local", :value => Time.now.strftime("%Y-%m-%dT%H:%M") %>
-	</td>
-<% @diary.opt_columns.all.each do |col|  %>
-	<td>
-	  <%= f.text_field col.ckey, :placeholder => OptColumn.col_type_name(col.col_type) %>
-	</td>
-<% end  %>
-      </tr>
-      <tr>
-	<td> &nbsp; </td>
-	<% @opt_columns.each do |col| %>
-	  <td><%= c = @record_counts[col.ckey]; pluralize(c, "record") %></td>
-	<% end %>
-      </tr>
-	<td colspan="<%= @diary.opt_columns.count + 1 %>">
-	  <%= f.submit "Add a record" %>
-	</td>
-      </tr>
-    </table>
+  <% if signed_in? && current_user.author?(@diary) && @diary.opt_columns.count > 0 %>
+    <section>
+      <%= form_for([@diary, @diary.opt_records.build]) do |f| %>
+	<table>
+	  <tr>
+	    <th>Time</th>
+	    <% @diary.opt_columns.all.each do |col|  %>
+	      <th><%= link_to col.name, diary_opt_column_path(@diary, col) %></th>
+	    <% end  %>
+	  </tr>
+	  <tr>
+	    <td>
+	      <%= f.text_field :time, :type => "datetime-local", :value => Time.now.strftime("%Y-%m-%dT%H:%M") %>
+	    </td>
+	    <% @diary.opt_columns.all.each do |col|  %>
+	      <td>
+		<%= f.text_field col.ckey, :placeholder => OptColumn.col_type_name(col.col_type) %>
+	      </td>
+	    <% end  %>
+	  </tr>
+	  <tr>
+	    <td> &nbsp; </td>
+	    <% @opt_columns.each do |col| %>
+	      <td><%= c = @record_counts[col.ckey]; pluralize(c, "record") %></td>
+	    <% end %>
+	  </tr>
+	  <td colspan="<%= @diary.opt_columns.count + 1 %>">
+	    <%= f.submit "Add a record" %>
+	  </td>
+	</tr>
+      </table>
 
-  <% end %>
-</section>
+    <% end %>
+  </section>
 <% end  %>
 
 <%= will_paginate @entries %>
@@ -56,3 +57,4 @@
 <% end  %>
 
 <%= will_paginate @entries %>
+</section>
