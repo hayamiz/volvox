@@ -443,7 +443,7 @@ describe DiariesController do
         get :show, :id => @diary
         response.should have_selector("a",
                                       :href => diary_path(:page => 2),
-                                      :content => "Next")
+                                      :content => t('will_paginate.next_label'))
         response.should have_selector("a",
                                       :href => diary_path(:page => 2),
                                       :content => "2")
