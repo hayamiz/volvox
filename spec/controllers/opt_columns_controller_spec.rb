@@ -119,7 +119,7 @@ describe OptColumnsController do
         get :show, :diary_id => @diary, :id => @col_float
         response_xpath("//table/tr/td[2]").size.should > 0
         response_xpath("//table/tr/td[2]").each_with_index do |td_tag, idx|
-          td_tag.inner_text.to_f.should == @float_records[idx].value[@col_float.ckey]
+          td_tag.inner_text.to_f.should be_within(0.01).of(@float_records[idx].value[@col_float.ckey])
         end
       end
 

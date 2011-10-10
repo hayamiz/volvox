@@ -7,9 +7,11 @@ describe OptColumn do
     end
 
     it "should add a column type" do
-      OptColumn.constants.should_not include(:COL_HOGE)
+      lambda do
+        OptColumn.const_get(:COL_HOGE)
+      end.should raise_error(NameError)
       OptColumn.add_col_type(:COL_HOGE, 1)
-      OptColumn.constants.should include(:COL_HOGE)
+      OptColumn.const_get(:COL_HOGE).should == 1
       OptColumn.instance_eval("remove_const(:COL_HOGE); @col_types.pop")
     end
 
@@ -25,15 +27,21 @@ describe OptColumn do
 
     describe "with int, float, and string" do
       it "should include COL_INTEGER" do
-        OptColumn.constants.should include(:COL_INTEGER)
+        lambda do
+          OptColumn.const_get(:COL_INTEGER)
+        end.should_not raise_error(NameError)
       end
 
       it "should include COL_FLOAT" do
-        OptColumn.constants.should include(:COL_FLOAT)
+        lambda do
+          OptColumn.const_get(:COL_FLOAT)
+        end.should_not raise_error(NameError)
       end
 
       it "should include COL_STRING" do
-        OptColumn.constants.should include(:COL_STRING)
+        lambda do
+          OptColumn.const_get(:COL_STRING)
+        end.should_not raise_error(NameError)
       end
 
       describe "management of column types" do

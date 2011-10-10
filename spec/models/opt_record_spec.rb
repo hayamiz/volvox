@@ -151,7 +151,9 @@ describe OptRecord do
 
     it "should respond to 'column key' methods" do
       [@col1, @col2].each do |col|
-        @record.should respond_to(col.ckey)
+        lambda do
+          @record.send(col.ckey)
+        end.should_not raise_error(NoMethodError)
       end
     end
 
